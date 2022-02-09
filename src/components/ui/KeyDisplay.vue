@@ -1,0 +1,146 @@
+<script setup lang="ts">
+import { ref } from "vue"
+const props = defineProps<{
+    keyId: Number
+    keyBoardInput: String
+    pressed: Function
+    unpressed: Function
+    ledOne: Boolean
+    ledTwo: Boolean
+    ledThree: Boolean
+    ledFour: Boolean
+}>()
+
+let pressedStatus = ref(false)
+
+const trigger = () => {
+    pressedStatus.value = true
+    props.pressed(props.keyBoardInput)
+}
+
+const untrigger = () => {
+    if (pressedStatus.value) {
+        props.unpressed(props.keyBoardInput)
+        pressedStatus.value = false
+    }
+}
+
+window.addEventListener("keydown", (e) => {
+    if (e.key === props.keyBoardInput) {
+        if (!pressedStatus.value) {
+            trigger()
+        }
+    }
+})
+window.addEventListener("keyup", (e) => {
+    if (e.key === props.keyBoardInput) {
+        untrigger()
+    }
+})
+</script>
+
+<template>
+    <div
+        class="key-content noselect"
+        v-bind:class="{ 'key-pressed': pressedStatus }"
+        @mousedown="trigger()"
+        @mouseup="untrigger()"
+    >
+        <div class="led-container">
+            <div class="led" v-bind:class="{ 'led-1': props.ledOne }"></div>
+            <div class="led" v-bind:class="{ 'led-2': props.ledTwo }"></div>
+            <div class="led" v-bind:class="{ 'led-3': props.ledThree }"></div>
+            <div class="led" v-bind:class="{ 'led-4': props.ledFour }"></div>
+        </div>
+        <span class="input-display">
+            {{ props.keyBoardInput.toUpperCase() }}
+        </span>
+    </div>
+</template>
+
+<style lang="scss">
+.key-content {
+    display: grid;
+    grid-template-rows: 10% auto;
+    width: 100%;
+    height: 100%;
+    background-color: #1e1e1ec7;
+    border-radius: 0.5rem;
+    box-shadow: 0.1rem 0.1rem 0.5rem #161616 inset,
+        -0.2rem -0.1rem 0.4rem white inset;
+    background: linear-gradient(143deg, #1e1e1ec7, #1e1e1e);
+
+    &.key-pressed {
+        box-shadow: 0.1rem 0.1rem 0.1rem #ffffff inset,
+            -0.2rem -0.1rem 1.4rem black inset;
+        background-image: linear-gradient(
+            315deg,
+            #1e1e1ec7,
+            #1e1e1e
+        ) !important;
+        transition: box-shadow 0.05s ease-in-out, background-image 2s;
+
+        .input-display {
+            font-size: calc(100% - 0.1rem);
+            transform: translate(1px, 1px);
+        }
+        .led-container {
+            .led {
+                transform: translate(2px, 2px);
+            }
+        }
+    }
+
+    .led-container {
+        grid-row: 1/2;
+        grid-column: 1/2;
+        display: flex;
+        flex-direction: row;
+        padding-left: 0.2rem;
+        padding-top: 0.2rem;
+        .led {
+            display: none;
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            margin-right: 0.3rem;
+            background-color: inherit;
+            box-shadow: 0.03rem 0.03rem 0.08rem black inset,
+                -0.03rem -0.03rem 0.08rem white inset;
+        }
+        .led-1 {
+            display: block;
+            background-color: orange;
+            box-shadow: 0.03rem 0.03rem 0.08rem black inset,
+                -0.03rem -0.03rem 0.08rem white inset;
+        }
+        .led-2 {
+            display: block;
+            background-color: purple;
+        }
+        .led-3 {
+            display: block;
+            background-color: rgb(0, 190, 0);
+        }
+        .led-4 {
+            display: block;
+            background-color: rgb(0, 183, 255);
+        }
+    }
+
+    .input-display {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        grid-row: 1/3;
+        grid-column: 1/3;
+        justify-self: center;
+        align-self: center;
+        // font-size: 1.5rem;
+        text-align: center;
+        color: white;
+    }
+}
+</style>
