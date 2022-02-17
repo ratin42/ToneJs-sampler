@@ -1,3 +1,3 @@
-# Vue 3 + Vite
-# Typescript
-# Tone.js
+Vue 3 + Vite
+Typescript
+Tone.js
