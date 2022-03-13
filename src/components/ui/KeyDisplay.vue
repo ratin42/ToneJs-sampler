@@ -1,42 +1,54 @@
 <script setup lang="ts">
-import { ref } from "vue"
-const props = defineProps<{
-    keyId: Number
-    keyBoardInput: String
-    pressed: Function
-    unpressed: Function
-    ledOne: Boolean
-    ledTwo: Boolean
-    ledThree: Boolean
-    ledFour: Boolean
-}>()
+import { ref, withDefaults } from "vue";
 
-let pressedStatus = ref(false)
+interface Props {
+    keyId: number;
+    keyBoardInput: string;
+    pressed: Function;
+    unpressed?: Function;
+    ledOne?: boolean;
+    ledTwo?: boolean;
+    ledThree?: boolean;
+    ledFour?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    keyId: 0,
+    keyBoardInput: "",
+    pressed: () => {},
+    unpressed: () => {},
+    ledOne: false,
+    ledTwo: false,
+    ledThree: false,
+    ledFour: false,
+});
+
+let pressedStatus = ref(false);
 
 const trigger = () => {
-    pressedStatus.value = true
-    props.pressed(props.keyBoardInput)
-}
+    pressedStatus.value = true;
+    props.pressed(props.keyBoardInput);
+};
 
 const untrigger = () => {
     if (pressedStatus.value) {
-        props.unpressed(props.keyBoardInput)
-        pressedStatus.value = false
+        props.unpressed(props.keyBoardInput);
+        pressedStatus.value = false;
     }
-}
+};
 
 window.addEventListener("keydown", (e) => {
     if (e.key === props.keyBoardInput) {
         if (!pressedStatus.value) {
-            trigger()
+            trigger();
         }
     }
-})
+});
 window.addEventListener("keyup", (e) => {
     if (e.key === props.keyBoardInput) {
-        untrigger()
+        untrigger();
     }
-})
+});
 </script>
 
 <template>

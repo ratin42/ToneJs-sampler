@@ -1,51 +1,63 @@
-<script setup>
-import { ref } from "vue"
-import KeyDisplay from "@/components/ui/KeyDisplay.vue"
-import Slider from "./Slider.vue"
-import * as Tone from "tone"
+<script setup lang="ts">
+import { ref } from "vue";
+import KeyDisplay from "@/components/ui/KeyDisplay.vue";
+import Slider from "@/components/sampler/Slider.vue";
+import * as Tone from "tone";
 
-const props = defineProps({
-    keyId: Number,
-    triggerKey: String,
-    sliderUp: String,
-    sliderDown: String,
-    ledOne: Boolean,
-    ledTwo: Boolean,
-    ledThree: Boolean,
-    ledFour: Boolean,
-})
-let sliderValue = ref(1)
-let currentNote = "C4"
-let offset = 0
+interface Props {
+    keyId: number;
+    triggerKey: string;
+    sliderUp: string;
+    sliderDown: string;
+    ledOne?: boolean;
+    ledTwo?: boolean;
+    ledThree?: boolean;
+    ledFour?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    keyId: 0,
+    triggerKey: "",
+    sliderUp: "",
+    sliderDown: "",
+    ledOne: false,
+    ledTwo: false,
+    ledThree: false,
+    ledFour: false,
+});
+let sliderValue = ref(1);
+let currentNote = "C4";
+let offset = 0;
 
 const buffer = new Tone.ToneAudioBuffer("Starman.mp3", () => {
-    console.log("loaded")
-})
+    console.log("loaded");
+});
 
-const instrument = new Tone.Player(buffer).toDestination()
+const instrument = new Tone.Player(buffer).toDestination();
 // const pitchShift = new Tone.PitchShift(0).toDestination()
 // instrument.connect(pitchShift)
+console.log("type = ", typeof instrument);
 
-const pressed = (key) => {
-    instrument.start(0, offset)
-}
-const unpressed = (key) => {
-    instrument.stop()
-}
+const pressed = (key: string) => {
+    instrument.start(0, offset);
+};
+const unpressed = (key: string) => {
+    instrument.stop();
+};
 
-const changePlayerParameter = (value) => {
+const changePlayerParameter = (value: number) => {
     // instrument.playbackRate = value
-    offset = value
+    offset = value;
     // instrument.restart(0, offset)
-}
-const sliderIncrement = (key) => {
-    sliderValue.value += 1
-    changePlayerParameter(sliderValue.value)
-}
-const sliderDecrement = (key) => {
-    sliderValue.value -= 1
-    changePlayerParameter(sliderValue.value)
-}
+};
+const sliderIncrement = (key: string) => {
+    sliderValue.value += 1;
+    changePlayerParameter(sliderValue.value);
+};
+const sliderDecrement = (key: string) => {
+    sliderValue.value -= 1;
+    changePlayerParameter(sliderValue.value);
+};
 </script>
 
 <template>
@@ -63,10 +75,6 @@ const sliderDecrement = (key) => {
                 :pressed="pressed"
                 :unpressed="unpressed"
                 v-bind="props"
-                :ledOne="false"
-                :ledTwo="false"
-                :ledThree="false"
-                :ledFour="false"
             ></KeyDisplay>
         </div>
     </div>

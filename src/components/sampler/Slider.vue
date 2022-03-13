@@ -1,5 +1,5 @@
-<script lang="ts" setup>
-import KeyDisplay from "../UI/KeyDisplay.vue"
+<script setup lang="ts">
+import KeyDisplay from "@/components/ui/KeyDisplay.vue"
 
 const props = defineProps({
     keyId: Number,
@@ -9,18 +9,14 @@ const props = defineProps({
     sliderIncrement: Function,
     sliderDecrement: Function,
 })
-
-const unpressed = (key: String) => {
-    return
-}
 </script>
 
 <template>
     <div class="slider-content">
         <div class="slider-button slider-up">
             <KeyDisplay
+                :keyId="props.keyId"
                 :pressed="props.sliderIncrement"
-                :unpressed="unpressed"
                 v-bind="props"
                 :keyBoardInput="sliderUp"
             ></KeyDisplay>
@@ -38,9 +34,8 @@ const unpressed = (key: String) => {
         </p>
         <div class="slider-button slider-down">
             <KeyDisplay
+                :keyId="props.keyId"
                 :pressed="props.sliderDecrement"
-                :unpressed="unpressed"
-                v-bind="props"
                 :keyBoardInput="sliderDown"
             ></KeyDisplay>
         </div>
