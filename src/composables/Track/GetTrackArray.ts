@@ -22,8 +22,10 @@ class Track {
         });
     }
 
+    // const pitchShift = new Tone.PitchShift(0).toDestination()
+    // instrument.connect(pitchShift)
+
     startPlayer = (velocity: number) => {
-        console.log("id,", this.id, "velocity", velocity);
         if (this.player) {
             this.player.start(0, this.offset);
         }

@@ -10,7 +10,11 @@ let keyMapping: any = inject("keyMapping");
 <template>
     <div id="performance">
         <div class="track-container">
-            <Pad class="pad" v-bind="keyMapping.sampler[0]"></Pad>
+            <Pad
+                class="pad"
+                :disable="false"
+                v-bind="keyMapping.sampler[0]"
+            ></Pad>
             <Pad class="pad" v-bind="keyMapping.sampler[1]"></Pad>
             <Pad class="pad" v-bind="keyMapping.sampler[2]"></Pad>
             <Pad class="pad" v-bind="keyMapping.sampler[3]"></Pad>

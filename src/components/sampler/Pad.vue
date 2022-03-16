@@ -4,54 +4,49 @@ import KeyDisplay from "@/components/ui/KeyDisplay.vue";
 import Slider from "@/components/sampler/Slider.vue";
 import * as Tone from "tone";
 
-import { layoutHandler } from "@/composables/Track/LayoutHandler.ts";
-// let layoutHandler: any = inject("layoutHandler");
+import { layoutHandler } from "@/composables/Track/LayoutHandler";
 
 interface Props {
-    keyId: number;
-    triggerKey: string;
-    sliderUp: string;
-    sliderDown: string;
+    trackId: number;
     ledOne?: boolean;
     ledTwo?: boolean;
     ledThree?: boolean;
     ledFour?: boolean;
 }
-
 const props = withDefaults(defineProps<Props>(), {
-    keyId: 0,
-    triggerKey: "",
-    sliderUp: "",
-    sliderDown: "",
+    trackId: 0,
     ledOne: false,
     ledTwo: false,
     ledThree: false,
     ledFour: false,
 });
+
+// Get keyMapping from LocalStorage
+let keyMapping: any = window.localStorage.getItem("keyMapping");
+if (keyMapping) {
+    keyMapping = JSON.parse(keyMapping).sampler[props.trackId];
+} else {
+    console.log("ERROR: keyMapping not found");
+}
+
+// Setup the Pad character
+let triggerKey = keyMapping.triggerKey;
+let sliderUp = keyMapping.sliderUp;
+let sliderDown = keyMapping.sliderDown;
+
 let sliderValue = ref(1);
-let currentNote = "C4";
-let offset = 0;
 
-const buffer = new Tone.ToneAudioBuffer("Starman.mp3", () => {
-    console.log("loaded");
-});
-
-const instrument = new Tone.Player(buffer).toDestination();
-// const pitchShift = new Tone.PitchShift(0).toDestination()
-// instrument.connect(pitchShift)
-console.log("type = ", typeof instrument);
-
-const pressed = (key: string) => {
-    console.log("from Pad", layoutHandler);
-    layoutHandler.test();
-    layoutHandler.playSound(props.keyId, 127);
+// Call the global object function for press/unpress events
+const handlePress = (key: string) => {
+    layoutHandler.playSound(props.trackId, 127);
 };
-const unpressed = (key: string) => {
-    layoutHandler.stopSound(props.keyId, 127);
+const handleUnpress = (key: string) => {
+    layoutHandler.stopSound(props.trackId);
 };
 
+// Call the global object function to update the track's slider value
 const updatePlayerValue = (value: number) => {
-    layoutHandler.sliderChange(props.keyId, value);
+    layoutHandler.sliderChange(props.trackId, value);
 };
 const sliderIncrement = (key: string) => {
     sliderValue.value += 1;
@@ -68,6 +63,8 @@ const sliderDecrement = (key: string) => {
         <Slider
             class="slider"
             v-bind="props"
+            :slider-down="sliderDown"
+            :slider-up="sliderUp"
             :slider-value="sliderValue"
             :slider-increment="sliderIncrement"
             :slider-decrement="sliderDecrement"
@@ -75,8 +72,8 @@ const sliderDecrement = (key: string) => {
         <div class="pad-content">
             <KeyDisplay
                 :keyBoardInput="triggerKey"
-                :pressed="pressed"
-                :unpressed="unpressed"
+                :pressed="handlePress"
+                :unpressed="handleUnpress"
                 v-bind="props"
             ></KeyDisplay>
         </div>

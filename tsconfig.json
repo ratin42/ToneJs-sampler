@@ -1,11 +1,20 @@
 {
+    "typeRoots": ["./typings"],
+    "compileOnSave": true,
+    "exclude": ["prettier.config.js"], // avoid error about prettier.config.js
     "compilerOptions": {
-        "allowJs": true,
+        "types": [
+            "vite/client" // if using vite avoid error on "class"
+        ],
+        "paths": {
+            "@/*": ["./src/*"] // alias for ./src/
+        },
+        "allowJs": false, // avoid error about prettier.config.js
         "target": "esnext",
         "module": "esnext",
-        // this enables stricter inference for data properties on `this`
         "strict": true,
         "jsx": "preserve",
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "noUnusedParameters": false
     }
 }

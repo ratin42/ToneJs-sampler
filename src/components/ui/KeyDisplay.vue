@@ -2,7 +2,6 @@
 import { ref, withDefaults } from "vue";
 
 interface Props {
-    keyId: number;
     keyBoardInput: string;
     pressed: Function;
     unpressed?: Function;
@@ -13,7 +12,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    keyId: 0,
     keyBoardInput: "",
     pressed: () => {},
     unpressed: () => {},

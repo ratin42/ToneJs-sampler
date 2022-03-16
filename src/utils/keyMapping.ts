@@ -1,4 +1,4 @@
-let keyMapping = {
+let initKeyMapping = {
     sampler: [
         {
             keyId: 0,
@@ -50,4 +50,5 @@ let keyMapping = {
         },
     ],
 };
-export { keyMapping };
+
+export { initKeyMapping };

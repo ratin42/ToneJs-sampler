@@ -1,27 +1,30 @@
-<script setup>
+<script setup lang="ts">
 // Contains the Pad Components that represent the input Button and the sliders
 // Create an array of Pad Engine and handle playing mode
 
 import { inject } from "vue";
 import Pad from "./Pad.vue";
-
-let keyMapping = inject("keyMapping");
-const down = () => {
-    console.log("down");
-};
 </script>
 
 <template>
     <div id="sampler">
         <div class="track-container">
-            <Pad class="pad" v-bind="keyMapping.sampler[0]"></Pad>
-            <Pad class="pad" v-bind="keyMapping.sampler[1]"></Pad>
+            <Pad class="pad" :trackId="0" :disabled="false"></Pad>
+            <Pad class="pad" :trackId="1" :disabled="false"></Pad>
+            <Pad class="pad" :trackId="2" :disabled="false"></Pad>
+            <Pad class="pad" :trackId="3" :disabled="false"></Pad>
+            <Pad class="pad" :trackId="4" :disabled="false"></Pad>
+            <Pad class="pad" :trackId="5" :disabled="false"></Pad>
+            <Pad class="pad" :trackId="6" :disabled="false"></Pad>
+            <Pad class="pad" :trackId="7" :disabled="false"></Pad>
+
+            <!-- <Pad class="pad" v-bind="keyMapping.sampler[1]"></Pad>
             <Pad class="pad" v-bind="keyMapping.sampler[2]"></Pad>
             <Pad class="pad" v-bind="keyMapping.sampler[3]"></Pad>
             <Pad class="pad" v-bind="keyMapping.sampler[4]"></Pad>
             <Pad class="pad" v-bind="keyMapping.sampler[5]"></Pad>
             <Pad class="pad" v-bind="keyMapping.sampler[6]"></Pad>
-            <Pad class="pad" v-bind="keyMapping.sampler[7]"></Pad>
+            <Pad class="pad" v-bind="keyMapping.sampler[7]"></Pad> -->
         </div>
     </div>
 </template>

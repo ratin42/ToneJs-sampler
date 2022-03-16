@@ -1,33 +1,33 @@
-<script setup>
-// import { useGetAudioContext } from "@/composables/WebAudioApi/AudioContext.js"
-import * as Tone from "tone"
-import { provide } from "vue"
-import useErrorHandler from "@/composables/ErrorHandler.js"
-import Sampler from "./sampler/Sampler.vue"
-import { keyMapping } from "@/utils/keyMapping.ts"
+<script setup lang="ts">
+import * as Tone from "tone";
+import { provide } from "vue";
 
-import { useControlerContainer } from "@/composables/Controler/Container.js"
+import Sampler from "@/components/Sampler/Sampler.vue";
+import { initKeyMapping } from "../utils/keyMapping";
 
 // Tone.setContext(new Tone.Context({ latencyHint: "interactive" }))
-
 // Tone.debug = true
-
-// useErrorHandler(props)
 // const { audioContext } = useGetAudioContext()
+let wait = true;
 
-let session = {
-    controler: "keyboard",
+if (!window.localStorage.getItem("keyMapping")) {
+    console.log("load initial key mapping");
+    window.localStorage.setItem("keyMapping", JSON.stringify(initKeyMapping));
+    wait = false;
+} else {
+    wait = false;
 }
-
-provide("session", session)
-provide("connectController", useControlerContainer)
-provide("keyMapping", keyMapping)
 </script>
 
 <template>
     <div id="desktop">
-        <button v-on:click="Tone.start()">Start Tone</button>
-        <Sampler> </Sampler>
+        <span v-if="wait">
+            <p>loading</p>
+        </span>
+        <span v-else>
+            <button v-on:click="Tone.start()">Start Tone</button>
+            <Sampler> </Sampler>
+        </span>
     </div>
 </template>
 

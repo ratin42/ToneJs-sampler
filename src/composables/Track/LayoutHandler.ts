@@ -10,11 +10,7 @@ class PlayModeHandler {
         this.trackArray = getNewTrackArray();
     }
 
-    test() {
-        console.log("test");
-    }
     playSound(trackId: number, velocity: number) {
-        console.log("playSound", trackId, velocity);
         const track = this.trackArray.find((track) => track.id === trackId);
         if (track) {
             track.startPlayer(velocity);
