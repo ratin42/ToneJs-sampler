@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { inject, ref } from "vue";
 import KeyDisplay from "@/components/ui/KeyDisplay.vue";
 import Slider from "@/components/sampler/Slider.vue";
 import * as Tone from "tone";
+
+import { layoutHandler } from "@/composables/Track/LayoutHandler.ts";
+// let layoutHandler: any = inject("layoutHandler");
 
 interface Props {
     keyId: number;
@@ -39,24 +42,24 @@ const instrument = new Tone.Player(buffer).toDestination();
 console.log("type = ", typeof instrument);
 
 const pressed = (key: string) => {
-    instrument.start(0, offset);
+    console.log("from Pad", layoutHandler);
+    layoutHandler.test();
+    layoutHandler.playSound(props.keyId, 127);
 };
 const unpressed = (key: string) => {
-    instrument.stop();
+    layoutHandler.stopSound(props.keyId, 127);
 };
 
-const changePlayerParameter = (value: number) => {
-    // instrument.playbackRate = value
-    offset = value;
-    // instrument.restart(0, offset)
+const updatePlayerValue = (value: number) => {
+    layoutHandler.sliderChange(props.keyId, value);
 };
 const sliderIncrement = (key: string) => {
     sliderValue.value += 1;
-    changePlayerParameter(sliderValue.value);
+    updatePlayerValue(sliderValue.value);
 };
 const sliderDecrement = (key: string) => {
     sliderValue.value -= 1;
-    changePlayerParameter(sliderValue.value);
+    updatePlayerValue(sliderValue.value);
 };
 </script>
 

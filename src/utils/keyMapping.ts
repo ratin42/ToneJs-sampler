@@ -1,53 +1,53 @@
 let keyMapping = {
     sampler: [
         {
-            keyId: 1,
+            keyId: 0,
             triggerKey: "z",
             sliderUp: "q",
             sliderDown: "a",
         },
         {
-            keyId: 2,
+            keyId: 1,
             triggerKey: "x",
             sliderUp: "w",
             sliderDown: "s",
         },
         {
-            keyId: 3,
+            keyId: 2,
             triggerKey: "c",
             sliderUp: "e",
             sliderDown: "d",
         },
         {
-            keyId: 4,
+            keyId: 3,
             triggerKey: "v",
             sliderUp: "r",
             sliderDown: "f",
         },
         {
-            keyId: 5,
+            keyId: 4,
             triggerKey: "b",
             sliderUp: "t",
             sliderDown: "g",
         },
         {
-            keyId: 6,
+            keyId: 5,
             triggerKey: "n",
             sliderUp: "y",
             sliderDown: "h",
         },
         {
-            keyId: 7,
+            keyId: 6,
             triggerKey: "m",
             sliderUp: "u",
             sliderDown: "j",
         },
         {
-            keyId: 8,
+            keyId: 7,
             triggerKey: ",",
             sliderUp: "i",
             sliderDown: "k",
         },
     ],
-}
-export { keyMapping }
+};
+export { keyMapping };
