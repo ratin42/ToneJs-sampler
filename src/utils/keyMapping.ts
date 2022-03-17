@@ -1,4 +1,10 @@
 let initKeyMapping = {
+    performance: {
+        tuneMixMulti: {
+            triggerKey: "Tab",
+            label: "Tab",
+        },
+    },
     sampler: [
         {
             keyId: 0,

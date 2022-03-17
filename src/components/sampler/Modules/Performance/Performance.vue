@@ -25,6 +25,7 @@ import TuneMixMultiVue from "./TuneMixMulti.vue";
 #performance {
     display: grid;
     grid-template-columns: 10vw 60vw;
+    gap: 2rem;
 }
 .track-container {
     display: grid;

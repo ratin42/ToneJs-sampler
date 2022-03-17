@@ -6,7 +6,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     status: false,
 });
-console.log("props", props.status);
 </script>
 
 <template>

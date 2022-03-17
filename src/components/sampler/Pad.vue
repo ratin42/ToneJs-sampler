@@ -4,6 +4,7 @@ import KeyDisplay from "@/components/ui/KeyDisplay.vue";
 import Slider from "@/components/sampler/Slider.vue";
 
 import { layoutHandler } from "@/composables/Track/LayoutHandler";
+import { getKeyMapping } from "@/composables/Controler/KeyMapping";
 
 interface Props {
     trackId: number;
@@ -21,12 +22,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 // Get keyMapping from LocalStorage
-let keyMapping: any = window.localStorage.getItem("keyMapping");
-if (keyMapping) {
-    keyMapping = JSON.parse(keyMapping).sampler[props.trackId];
-} else {
-    console.log("ERROR: keyMapping not found");
-}
+let keyMapping: any = getKeyMapping("sampler");
+keyMapping = keyMapping[props.trackId];
 
 // Setup the Pad character
 let triggerKey = keyMapping.triggerKey;

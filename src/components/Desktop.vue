@@ -4,6 +4,7 @@ import { provide } from "vue";
 
 import Sampler from "@/components/Sampler/Sampler.vue";
 import { initKeyMapping } from "../utils/keyMapping";
+import { loadKeyMapping } from "@/composables/Controler/KeyMapping";
 
 // Tone.setContext(new Tone.Context({ latencyHint: "interactive" }))
 // Tone.debug = true
@@ -11,8 +12,7 @@ import { initKeyMapping } from "../utils/keyMapping";
 let wait = true;
 
 if (!window.localStorage.getItem("keyMapping")) {
-    console.log("load initial key mapping");
-    window.localStorage.setItem("keyMapping", JSON.stringify(initKeyMapping));
+    loadKeyMapping();
     wait = false;
 } else {
     wait = false;
@@ -22,7 +22,7 @@ if (!window.localStorage.getItem("keyMapping")) {
 <template>
     <div id="desktop">
         <span v-if="wait">
-            <p>loading</p>
+            <p>loading...</p>
         </span>
         <span v-else>
             <!-- <button v-on:click="Tone.start()">Start Tone</button> -->

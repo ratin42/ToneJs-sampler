@@ -3,6 +3,7 @@ import { ref, withDefaults } from "vue";
 
 interface Props {
     keyBoardInput: string;
+    label?: string;
     pressed: Function;
     unpressed?: Function;
     ledOne?: boolean;
@@ -13,6 +14,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
     keyBoardInput: "",
+    label: "",
     pressed: () => {},
     unpressed: () => {},
     ledOne: false,
@@ -36,7 +38,8 @@ const untrigger = () => {
 };
 
 window.addEventListener("keydown", (e) => {
-    console.log("keydown", e);
+    e.preventDefault();
+    // console.log(e.key);
     if (e.key === props.keyBoardInput) {
         if (!pressedStatus.value) {
             trigger();
@@ -64,7 +67,7 @@ window.addEventListener("keyup", (e) => {
             <div class="led" v-bind:class="{ 'led-4': props.ledFour }"></div>
         </div>
         <span class="input-display">
-            {{ props.keyBoardInput.toUpperCase() }}
+            {{ props.label ? props.label : props.keyBoardInput.toUpperCase() }}
         </span>
     </div>
 </template>

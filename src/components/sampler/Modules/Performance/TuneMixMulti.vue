@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import KeyDisplay from "@/components/ui/KeyDisplay.vue";
 import LedRed from "@/components/ui/LedRed.vue";
+import { getKeyMapping } from "@/composables/Controler/KeyMapping";
+
+// Get keyMapping from LocalStorage
+let keyMapping: any = getKeyMapping("performance");
 
 let handlePress = (key: string) => {
     console.log("handlePress");
 };
-
 let handleUnpress = (key: string) => {
     console.log("handleUnpress");
 };
+
 let ledTuneDecay: boolean = true;
 let ledMix: boolean = false;
 let ledMultiMode: boolean = false;
@@ -19,7 +23,8 @@ let ledMultiMode: boolean = false;
         <span class="button-text-container">
             <KeyDisplay
                 class="switch-button"
-                keyBoardInput="1"
+                :keyBoardInput="keyMapping.tuneMixMulti.triggerKey"
+                :label="keyMapping.tuneMixMulti.label"
                 :pressed="handlePress"
                 :unpressed="handleUnpress"
             ></KeyDisplay>
@@ -46,10 +51,12 @@ let ledMultiMode: boolean = false;
     display: grid;
     grid-template-rows: 10vw;
     align-items: center;
+    justify-content: end;
 
     .button-text-container {
         display: grid;
-        grid-template-columns: 30% 70%;
+        grid-template-columns: auto auto;
+        gap: 1.5rem;
         width: 100%;
         align-items: center;
 
@@ -69,7 +76,7 @@ let ledMultiMode: boolean = false;
             }
         }
         .switch-button {
-            width: 2vw;
+            width: 4vw;
             height: 2vw;
         }
     }
