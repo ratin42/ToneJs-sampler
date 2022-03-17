@@ -74,25 +74,35 @@ window.addEventListener("keyup", (e) => {
     grid-template-rows: 10% auto;
     width: 100%;
     height: 100%;
-    background-color: #1e1e1ec7;
-    border-radius: 0.5rem;
-    box-shadow: 0.1rem 0.1rem 0.5rem #161616 inset,
-        -0.2rem -0.1rem 0.4rem white inset;
-    background: linear-gradient(143deg, #1e1e1ec7, #1e1e1e);
+
+    border-radius: 0.7rem;
+
+    // light mode
+    border-style: solid;
+    border-color: var(--brand-yellow);
+    border-width: 2px;
+    background: var(--screen-black);
+    box-shadow: -0.388em 0.5em 0.438em #d9aa2b, 0.5em -0.5em 1.063em #ffe63b;
+
+    // dark mode
+    // background: #312f28;
+    // box-shadow: -14px 14px 20px #2a2822, 14px -14px 29px #38362e;
 
     &.key-pressed {
-        box-shadow: 0.1rem 0.1rem 0.1rem #ffffff inset,
-            -0.2rem -0.1rem 1.4rem black inset;
-        background-image: linear-gradient(
-            315deg,
-            #1e1e1ec7,
-            #1e1e1e
-        ) !important;
+        border-radius: 0.7rem;
+
+        // light mode
+        background: #312f28;
+        background-image: linear-gradient(37deg, #444238, #212223) !important;
+
+        // dark mode
+        // background: #312f28;
+        // box-shadow: inset -14px 14px 20px #2a2822, inset 14px -14px 29px #38362e;
+
         transition: box-shadow 0.05s ease-in-out, background-image 2s;
 
         .input-display {
             font-size: calc(100% - 0.1rem);
-            transform: translate(1px, 1px);
         }
         .led-container {
             .led {
@@ -139,6 +149,7 @@ window.addEventListener("keyup", (e) => {
     }
 
     .input-display {
+        color: var(--device-yellow);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -150,7 +161,6 @@ window.addEventListener("keyup", (e) => {
         align-self: center;
         // font-size: 1.5rem;
         text-align: center;
-        color: white;
     }
 }
 </style>

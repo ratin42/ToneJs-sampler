@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { inject, ref } from "vue";
+import { ref } from "vue";
 import KeyDisplay from "@/components/ui/KeyDisplay.vue";
 import Slider from "@/components/sampler/Slider.vue";
-import * as Tone from "tone";
 
 import { layoutHandler } from "@/composables/Track/LayoutHandler";
 
@@ -46,7 +45,8 @@ const handleUnpress = (key: string) => {
 
 // Call the global object function to update the track's slider value
 const updatePlayerValue = (value: number) => {
-    layoutHandler.sliderChange(props.trackId, value);
+    // layoutHandler.sliderChange(props.trackId, value);
+    console.log("slider change");
 };
 const sliderIncrement = (key: string) => {
     sliderValue.value += 1;
@@ -84,7 +84,7 @@ const sliderDecrement = (key: string) => {
 .track {
     display: grid;
     grid-template-rows: 10vw 5vw;
-    grid-gap: 1rem;
+    grid-gap: 5rem;
 
     .slider {
         grid-row: 1/2;

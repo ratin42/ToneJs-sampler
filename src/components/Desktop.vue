@@ -25,13 +25,15 @@ if (!window.localStorage.getItem("keyMapping")) {
             <p>loading</p>
         </span>
         <span v-else>
-            <button v-on:click="Tone.start()">Start Tone</button>
+            <!-- <button v-on:click="Tone.start()">Start Tone</button> -->
             <Sampler> </Sampler>
         </span>
     </div>
 </template>
 
 <style>
+#desktop {
+}
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

@@ -1,5 +1,5 @@
 <script setup>
-import DesktopVue from "@/components/Desktop.vue"
+import DesktopVue from "@/components/Desktop.vue";
 </script>
 
 <template>
@@ -12,7 +12,12 @@ import DesktopVue from "@/components/Desktop.vue"
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+
+    // light mode
     color: #2c3e50;
+
+    // dark mode
+    // color: var(--device-yellow);
     margin-top: 60px;
 }
 html {
@@ -29,5 +34,15 @@ button,
 input,
 body {
     cursor: url("/cursor.png"), auto;
+
+    // light mode
+    background-color: var(--brand-yellow);
+
+    // dark mode
+    // background-color: #312f28;
+
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }
 </style>
