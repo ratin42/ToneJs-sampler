@@ -22,6 +22,10 @@ import TuneMixMultiVue from "./TuneMixMulti.vue";
 </template>
 
 <style lang="scss" scoped>
+#performance {
+    display: grid;
+    grid-template-columns: 10vw 60vw;
+}
 .track-container {
     display: grid;
     justify-content: center;
