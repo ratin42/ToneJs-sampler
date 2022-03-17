@@ -36,6 +36,7 @@ const untrigger = () => {
 };
 
 window.addEventListener("keydown", (e) => {
+    console.log("keydown", e);
     if (e.key === props.keyBoardInput) {
         if (!pressedStatus.value) {
             trigger();

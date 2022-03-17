@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import KeyDisplay from "@/components/ui/KeyDisplay.vue";
+import LedRed from "@/components/ui/LedRed.vue";
 
 let handlePress = (key: string) => {
     console.log("handlePress");
@@ -8,6 +9,9 @@ let handlePress = (key: string) => {
 let handleUnpress = (key: string) => {
     console.log("handleUnpress");
 };
+let ledTuneDecay: boolean = true;
+let ledMix: boolean = false;
+let ledMultiMode: boolean = false;
 </script>
 
 <template>
@@ -20,15 +24,24 @@ let handleUnpress = (key: string) => {
                 :unpressed="handleUnpress"
             ></KeyDisplay>
             <span class="switch-text">
-                <p>Tune/Decay</p>
-                <p>Mix</p>
-                <p>Multi Mode</p>
+                <span class="switch-option">
+                    <LedRed :status="ledTuneDecay"></LedRed>
+                    <p>Tune/Decay</p>
+                </span>
+                <span class="switch-option">
+                    <LedRed :status="ledMix"></LedRed>
+                    <p>Mix</p>
+                </span>
+                <span class="switch-option">
+                    <LedRed :status="ledMultiMode"></LedRed>
+                    <p>Multi Mode</p>
+                </span>
             </span>
         </span>
     </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 #tune-mix-multi {
     display: grid;
     grid-template-rows: 10vw;
@@ -41,9 +54,18 @@ let handleUnpress = (key: string) => {
         align-items: center;
 
         .switch-text {
+            display: grid;
+            grid-gap: 0.4rem;
+            .switch-option {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+            }
+
             text-align: left;
             p {
                 margin: 0rem;
+                margin-left: 0.6rem;
             }
         }
         .switch-button {
