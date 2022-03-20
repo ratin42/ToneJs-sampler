@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { inject, reactive } from "vue";
 import KeyDisplay from "@/components/ui/KeyDisplay.vue";
 import Slider from "@/components/sampler/Slider.vue";
 
-import { layoutHandler } from "@/composables/Track/LayoutHandler";
 import { getKeyMapping } from "@/composables/Controler/KeyMapping";
 
+// Define Props
 interface Props {
     trackId: number;
     ledOne?: boolean;
@@ -21,42 +21,46 @@ const props = withDefaults(defineProps<Props>(), {
     ledFour: false,
 });
 
+// Get Global Object
+const dk: any = inject("dk");
+
+// Get Slider Value from Global Object
+let sliderValue = reactive(dk.trackArray[props.trackId].sliderValue);
+
 // Get keyMapping from LocalStorage
 let keyMapping: any = getKeyMapping("sampler");
 keyMapping = keyMapping[props.trackId];
 
-// Setup the Pad character
+// Get the pad and slider keysBindings from keyMapping object
 let triggerKey = keyMapping.triggerKey;
 let sliderUp = keyMapping.sliderUp;
 let sliderDown = keyMapping.sliderDown;
 
-let sliderValue = ref(1);
-
 // Call the global object function for press/unpress events
 const handlePress = (key: string) => {
-    layoutHandler.playSound(props.trackId, 127);
+    dk.playSound(props.trackId, 127);
 };
 const handleUnpress = (key: string) => {
-    layoutHandler.stopSound(props.trackId);
+    dk.stopSound(props.trackId);
 };
 
 // Call the global object function to update the track's slider value
-const updatePlayerValue = (value: number) => {
-    // layoutHandler.sliderChange(props.trackId, value);
-    console.log("slider change");
+const updateSliderValue = (value: number) => {
+    dk.handleSlider(props.trackId, value);
 };
 const sliderIncrement = (key: string) => {
     sliderValue.value += 1;
-    updatePlayerValue(sliderValue.value);
+    updateSliderValue(sliderValue.value);
 };
 const sliderDecrement = (key: string) => {
     sliderValue.value -= 1;
-    updatePlayerValue(sliderValue.value);
+    updateSliderValue(sliderValue.value);
 };
 </script>
 
 <template>
     <div class="track">
+        <!-- Slider Component with screen for the sliderValue -->
         <Slider
             class="slider"
             v-bind="props"
@@ -67,6 +71,7 @@ const sliderDecrement = (key: string) => {
             :slider-decrement="sliderDecrement"
         ></Slider>
         <div class="pad-content">
+            <!-- The pad -->
             <KeyDisplay
                 :keyBoardInput="triggerKey"
                 :pressed="handlePress"

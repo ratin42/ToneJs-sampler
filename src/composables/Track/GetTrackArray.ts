@@ -1,6 +1,7 @@
 // Handle track Object
 // Create an array of 8 Track Objects
 
+import { ref, Ref } from "vue";
 import * as Tone from "tone";
 import { ToneAudioBuffer } from "tone";
 import { tracksDescription } from "../../utils/tracksDescription.js";
@@ -12,27 +13,30 @@ class Track {
     player: Tone.Player | null;
     maxSampleLength: number = 20;
     offset: number = 0;
+    currentPitch: number = 16;
+    sliderValue: Ref<number> = ref(0);
 
     constructor(id: number, sampleUrl: string, color: string) {
         this.id = id;
         this.color = color;
         this.player = null;
         this.buffer = new Tone.ToneAudioBuffer(sampleUrl, () => {
-            this.player = new Tone.Player(this.buffer).toDestination();
+            this.player = new Tone.Player(this.buffer);
+            this.player.chain(Tone.Destination);
         });
     }
 
     // const pitchShift = new Tone.PitchShift(0).toDestination()
     // instrument.connect(pitchShift)
 
-    startPlayer = (velocity: number) => {
+    startPlayer = () => {
         if (this.player) {
             this.player.start(0, this.offset);
         }
     };
     stopPlayer = () => {
         if (this.player) {
-            this.player.stop();
+            this.player.stop(0);
         }
     };
 
@@ -41,6 +45,14 @@ class Track {
     };
     getOffset = () => {
         return this.offset;
+    };
+
+    changePitch = (pitch: number) => {
+        this.currentPitch = this.sliderValue.value;
+        pitch = pitch / 261.637;
+        if (this.player) {
+            this.player.playbackRate = pitch;
+        }
     };
 }
 

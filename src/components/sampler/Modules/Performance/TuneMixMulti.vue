@@ -1,21 +1,20 @@
 <script setup lang="ts">
+import { inject } from "vue";
 import KeyDisplay from "@/components/ui/KeyDisplay.vue";
 import LedRed from "@/components/ui/LedRed.vue";
 import { getKeyMapping } from "@/composables/Controler/KeyMapping";
+
+const dk: any = inject("dk");
 
 // Get keyMapping from LocalStorage
 let keyMapping: any = getKeyMapping("performance");
 
 let handlePress = (key: string) => {
-    console.log("handlePress");
+    dk.setControlMode();
 };
 let handleUnpress = (key: string) => {
-    console.log("handleUnpress");
+    // console.log("handleUnpress");
 };
-
-let ledTuneDecay: boolean = true;
-let ledMix: boolean = false;
-let ledMultiMode: boolean = false;
 </script>
 
 <template>
@@ -30,15 +29,15 @@ let ledMultiMode: boolean = false;
             ></KeyDisplay>
             <span class="switch-text">
                 <span class="switch-option">
-                    <LedRed :status="ledTuneDecay"></LedRed>
+                    <LedRed :status="dk.controlMode.value == 'tune'"></LedRed>
                     <p>Tune/Decay</p>
                 </span>
                 <span class="switch-option">
-                    <LedRed :status="ledMix"></LedRed>
+                    <LedRed :status="dk.controlMode.value == 'mix'"></LedRed>
                     <p>Mix</p>
                 </span>
                 <span class="switch-option">
-                    <LedRed :status="ledMultiMode"></LedRed>
+                    <LedRed :status="dk.controlMode.value == 'multi'"></LedRed>
                     <p>Multi Mode</p>
                 </span>
             </span>

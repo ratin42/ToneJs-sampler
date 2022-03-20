@@ -3,12 +3,13 @@ import * as Tone from "tone";
 import { provide } from "vue";
 
 import Sampler from "@/components/Sampler/Sampler.vue";
-import { initKeyMapping } from "../utils/keyMapping";
 import { loadKeyMapping } from "@/composables/Controler/KeyMapping";
+import { dk } from "@/composables/DiskoKaset";
 
 // Tone.setContext(new Tone.Context({ latencyHint: "interactive" }))
 // Tone.debug = true
 // const { audioContext } = useGetAudioContext()
+provide("dk", dk);
 let wait = true;
 
 if (!window.localStorage.getItem("keyMapping")) {

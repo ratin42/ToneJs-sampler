@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import KeyDisplay from "@/components/ui/KeyDisplay.vue"
+import KeyDisplay from "@/components/ui/KeyDisplay.vue";
 
 const props = defineProps({
     keyId: Number,
@@ -8,7 +8,7 @@ const props = defineProps({
     sliderValue: Number,
     sliderIncrement: Function,
     sliderDecrement: Function,
-})
+});
 </script>
 
 <template>
@@ -30,7 +30,7 @@ const props = defineProps({
             id="myRange"
         /> -->
         <p style="align-self: center">
-            {{ sliderValue.toFixed(2).toString() }}
+            {{ sliderValue?.toFixed(2).toString() }}
         </p>
         <div class="slider-button slider-down">
             <KeyDisplay

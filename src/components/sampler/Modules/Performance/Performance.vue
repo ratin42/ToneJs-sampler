@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Contains the Pad Components that represent the input Button and the sliders
 
-import Pad from "@/components/sampler/Pad.vue";
+import Pad from "@/components/Sampler/Pad.vue";
 import TuneMixMultiVue from "./TuneMixMulti.vue";
 </script>
 
