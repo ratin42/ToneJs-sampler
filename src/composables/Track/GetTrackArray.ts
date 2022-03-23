@@ -6,6 +6,8 @@ import * as Tone from "tone";
 import { ToneAudioBuffer } from "tone";
 import { tracksDescription } from "../../utils/tracksDescription.js";
 
+type trackArray = Track[];
+
 class Track {
     id: number = 0;
     color: string = "green";
@@ -25,9 +27,6 @@ class Track {
             this.player.chain(Tone.Destination);
         });
     }
-
-    // const pitchShift = new Tone.PitchShift(0).toDestination()
-    // instrument.connect(pitchShift)
 
     startPlayer = () => {
         if (this.player) {
@@ -57,18 +56,24 @@ class Track {
 }
 
 function getNewTrackArray() {
-    const tracks: Track[] = [];
+    let bank: trackArray[] = [];
+    let tracks: trackArray = [];
 
-    for (let i = 0; i < 8; i++) {
-        tracks.push(
-            new Track(
-                tracksDescription[i].id,
-                tracksDescription[i].sampleUrl,
-                tracksDescription[i].color
-            )
-        );
+    for (let b = 0; b < 4; b++) {
+        for (let i = 0; i < 8; i++) {
+            tracks.push(
+                new Track(
+                    tracksDescription[i].id,
+                    tracksDescription[i].sampleUrl,
+                    tracksDescription[i].color
+                )
+            );
+        }
+        bank.push(tracks);
+        tracks = [];
     }
-    return tracks;
+    return bank;
 }
 
 export { getNewTrackArray, Track };
+export type { trackArray };

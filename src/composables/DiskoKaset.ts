@@ -4,14 +4,17 @@
 
 import { ref, Ref } from "vue";
 import { getNewTrackArray, Track } from "./Track/GetTrackArray";
+import type { trackArray } from "./Track/GetTrackArray";
 import { noteTranslation } from "@/utils/noteTranslation";
 
 class DiskoKaset {
-    trackArray: Track[] = [];
+    trackBank: trackArray[] = [];
+    trackArray: trackArray = [];
     controlMode: Ref<string> = ref("");
 
     constructor() {
-        this.trackArray = getNewTrackArray();
+        this.trackBank = getNewTrackArray();
+        this.trackArray = this.trackBank[0];
     }
 
     playSound(trackId: number) {
