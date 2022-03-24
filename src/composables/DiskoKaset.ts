@@ -43,22 +43,27 @@ class DiskoKaset {
             case 0:
                 this.currentBank.value = 1;
                 this.trackArray.value = this.trackBank[1];
+                this.controlModeBind();
                 break;
             case 1:
                 this.currentBank.value = 2;
                 this.trackArray.value = this.trackBank[2];
+                this.controlModeBind();
                 break;
             case 2:
                 this.currentBank.value = 3;
                 this.trackArray.value = this.trackBank[3];
+                this.controlModeBind();
                 break;
             case 3:
                 this.currentBank.value = 0;
                 this.trackArray.value = this.trackBank[0];
+                this.controlModeBind();
                 break;
             default:
                 this.currentBank.value = 0;
                 this.trackArray.value = this.trackBank[0];
+                this.controlModeBind();
         }
     }
 
@@ -66,20 +71,43 @@ class DiskoKaset {
         switch (this.controlMode.value) {
             case "":
                 this.controlMode.value = "tune";
-                this.setSliderToTune();
+                this.controlModeBind();
                 break;
             case "tune":
                 this.controlMode.value = "mix";
-                this.resetSlider();
+                this.controlModeBind();
                 break;
             case "mix":
                 this.controlMode.value = "";
+                this.controlModeBind();
                 break;
             default:
                 this.controlMode.value = "";
         }
     }
+    controlModeBind() {
+        switch (this.controlMode.value) {
+            case "":
+                this.resetSlider();
+                break;
+            case "tune":
+                this.setSliderToTune();
+                break;
+            case "mix":
+                this.resetSlider();
+                break;
+            default:
+                this.resetSlider();
+        }
+    }
+
     setSliderToTune() {
+        // this.trackBank.forEach((trackArray) => {
+        //     trackArray.value.forEach((track) => {
+        //         console.log("track", track.sliderValue);
+        //         // track.sliderValue = track.currentPitch;
+        //     });
+        // });
         this.trackArray.value.forEach((track) => {
             console.log("track", track.sliderValue);
             track.sliderValue = track.currentPitch;
