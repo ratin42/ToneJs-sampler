@@ -5,28 +5,60 @@
 import { ref, Ref } from "vue";
 import { getNewTrackArray, Track } from "./Track/GetTrackArray";
 import type { trackArray } from "./Track/GetTrackArray";
-import { noteTranslation } from "@/utils/noteTranslation";
 
 class DiskoKaset {
     trackBank: trackArray[] = [];
-    trackArray: trackArray = [];
+    trackArray: Ref<trackArray> = ref([]);
     controlMode: Ref<string> = ref("");
+    currentBank: Ref<number> = ref(0);
 
     constructor() {
         this.trackBank = getNewTrackArray();
-        this.trackArray = this.trackBank[0];
+        this.trackArray.value = this.trackBank[0];
+    }
+
+    trackIdToBank(trackId: number) {
+        return trackId + this.currentBank.value * 8;
     }
 
     playSound(trackId: number) {
-        const track = this.trackArray.find((track) => track.id === trackId);
+        let track = this.trackArray.value.find(
+            (track) => track.id === this.trackIdToBank(trackId)
+        );
         if (track) {
             track.startPlayer();
         }
     }
     stopSound(trackId: number) {
-        const track = this.trackArray.find((track) => track.id === trackId);
+        let track = this.trackArray.value.find(
+            (track) => track.id === this.trackIdToBank(trackId)
+        );
         if (track) {
             track.stopPlayer();
+        }
+    }
+
+    setBank() {
+        switch (this.currentBank.value) {
+            case 0:
+                this.currentBank.value = 1;
+                this.trackArray.value = this.trackBank[1];
+                break;
+            case 1:
+                this.currentBank.value = 2;
+                this.trackArray.value = this.trackBank[2];
+                break;
+            case 2:
+                this.currentBank.value = 3;
+                this.trackArray.value = this.trackBank[3];
+                break;
+            case 3:
+                this.currentBank.value = 0;
+                this.trackArray.value = this.trackBank[0];
+                break;
+            default:
+                this.currentBank.value = 0;
+                this.trackArray.value = this.trackBank[0];
         }
     }
 
@@ -48,21 +80,25 @@ class DiskoKaset {
         }
     }
     setSliderToTune() {
-        this.trackArray.forEach((track) => {
-            track.sliderValue.value = track.currentPitch;
+        this.trackArray.value.forEach((track) => {
+            console.log("track", track.sliderValue);
+            track.sliderValue = track.currentPitch;
         });
     }
     resetSlider() {
-        this.trackArray.forEach((track) => {
-            track.sliderValue.value = 0;
+        this.trackArray.value.forEach((track) => {
+            track.sliderValue = 0;
         });
     }
 
     handleSlider(trackId: number, value: number) {
+        console.log("value", value);
         if (this.controlMode.value === "tune") {
-            const track = this.trackArray.find((track) => track.id === trackId);
+            let track = this.trackArray.value.find(
+                (track) => track.id === this.trackIdToBank(trackId)
+            );
             if (track) {
-                track.changePitch(parseFloat(noteTranslation[value].frequency));
+                track.changePitch(value);
             }
         }
     }

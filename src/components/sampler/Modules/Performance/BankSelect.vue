@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { inject } from "vue";
 import KeyDisplay from "@/components/ui/KeyDisplay.vue";
-import LedRed from "@/components/ui/LedRed.vue";
 import { getKeyMapping } from "@/composables/Controler/KeyMapping";
+import LedRed from "@/components/ui/LedRed.vue";
 
 const dk: any = inject("dk");
 
@@ -10,7 +10,7 @@ const dk: any = inject("dk");
 let keyMapping: any = getKeyMapping("performance");
 
 let handlePress = (key: string) => {
-    dk.setControlMode();
+    dk.setBank();
 };
 let handleUnpress = (key: string) => {
     // console.log("handleUnpress");
@@ -18,27 +18,31 @@ let handleUnpress = (key: string) => {
 </script>
 
 <template>
-    <div id="tune-mix-multi">
+    <div id="bank-select">
         <span class="button-text-container">
             <KeyDisplay
-                class="switch-button"
-                :keyBoardInput="keyMapping.tuneMixMulti.triggerKey"
-                :label="keyMapping.tuneMixMulti.label"
+                class="select-button"
+                :keyBoardInput="keyMapping.bankSelect.triggerKey"
+                :label="keyMapping.bankSelect.label"
                 :pressed="handlePress"
                 :unpressed="handleUnpress"
             ></KeyDisplay>
             <span class="switch-text">
                 <span class="switch-option">
-                    <LedRed :status="dk.controlMode.value == 'tune'"></LedRed>
-                    <p>Tune/Decay</p>
+                    <LedRed :status="dk.currentBank.value == 0"></LedRed>
+                    <p>A</p>
                 </span>
                 <span class="switch-option">
-                    <LedRed :status="dk.controlMode.value == 'mix'"></LedRed>
-                    <p>Mix</p>
+                    <LedRed :status="dk.currentBank.value == 1"></LedRed>
+                    <p>B</p>
                 </span>
                 <span class="switch-option">
-                    <LedRed :status="dk.controlMode.value == 'multi'"></LedRed>
-                    <p>Multi Mode</p>
+                    <LedRed :status="dk.currentBank.value == 2"></LedRed>
+                    <p>C</p>
+                </span>
+                <span class="switch-option">
+                    <LedRed :status="dk.currentBank.value == 3"></LedRed>
+                    <p>D</p>
                 </span>
             </span>
         </span>
@@ -46,11 +50,11 @@ let handleUnpress = (key: string) => {
 </template>
 
 <style scoped lang="scss">
-#tune-mix-multi {
+#bank-select {
     display: grid;
     grid-template-rows: 10vw;
     align-items: center;
-    justify-content: end;
+    justify-content: center;
 
     .button-text-container {
         display: grid;
@@ -59,7 +63,7 @@ let handleUnpress = (key: string) => {
         width: 100%;
         align-items: center;
 
-        .switch-button {
+        .select-button {
             width: 4vw;
             height: 2vw;
         }

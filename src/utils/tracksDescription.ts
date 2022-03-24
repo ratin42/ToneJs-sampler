@@ -57,7 +57,7 @@ let tracksDescription = [
     },
     {
         id: 11,
-        sampleUrl: "Samples/Factory/openhi.mp3",
+        sampleUrl: "Samples/Factory/open hi.mp3",
         color: "purple",
     },
     {

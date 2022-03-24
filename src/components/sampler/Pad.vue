@@ -24,9 +24,6 @@ const props = withDefaults(defineProps<Props>(), {
 // Get Global Object
 const dk: any = inject("dk");
 
-// Get Slider Value from Global Object
-let sliderValue = reactive(dk.trackArray[props.trackId].sliderValue);
-
 // Get keyMapping from LocalStorage
 let keyMapping: any = getKeyMapping("sampler");
 keyMapping = keyMapping[props.trackId];
@@ -49,12 +46,12 @@ const updateSliderValue = (value: number) => {
     dk.handleSlider(props.trackId, value);
 };
 const sliderIncrement = (key: string) => {
-    sliderValue.value += 1;
-    updateSliderValue(sliderValue.value);
+    dk.trackArray.value[props.trackId].sliderValue += 1;
+    updateSliderValue(dk.trackArray.value[props.trackId].sliderValue);
 };
 const sliderDecrement = (key: string) => {
-    sliderValue.value -= 1;
-    updateSliderValue(sliderValue.value);
+    dk.trackArray.value[props.trackId].sliderValue -= 1;
+    updateSliderValue(dk.trackArray.value[props.trackId].sliderValue);
 };
 </script>
 
@@ -66,7 +63,7 @@ const sliderDecrement = (key: string) => {
             v-bind="props"
             :slider-down="sliderDown"
             :slider-up="sliderUp"
-            :slider-value="sliderValue"
+            :slider-value="dk.trackArray.value[props.trackId].sliderValue"
             :slider-increment="sliderIncrement"
             :slider-decrement="sliderDecrement"
         ></Slider>

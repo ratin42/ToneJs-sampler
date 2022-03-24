@@ -4,6 +4,10 @@ let initKeyMapping = {
             triggerKey: "Tab",
             label: "Tab",
         },
+        bankSelect: {
+            triggerKey: "Shift",
+            label: "shift",
+        },
     },
     sampler: [
         {

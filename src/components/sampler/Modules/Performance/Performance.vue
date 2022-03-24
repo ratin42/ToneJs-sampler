@@ -2,12 +2,16 @@
 // Contains the Pad Components that represent the input Button and the sliders
 
 import Pad from "@/components/Sampler/Pad.vue";
-import TuneMixMultiVue from "./TuneMixMulti.vue";
+import TuneMixMulti from "./TuneMixMulti.vue";
+import BankSelect from "./BankSelect.vue";
 </script>
 
 <template>
     <div id="performance">
-        <TuneMixMultiVue></TuneMixMultiVue>
+        <span class="control-ui">
+            <TuneMixMulti></TuneMixMulti>
+            <BankSelect></BankSelect>
+        </span>
         <div class="track-container">
             <Pad class="pad" :trackId="0" :disabled="false"></Pad>
             <Pad class="pad" :trackId="1" :disabled="false"></Pad>
@@ -26,11 +30,16 @@ import TuneMixMultiVue from "./TuneMixMulti.vue";
     display: grid;
     grid-template-columns: 10vw 60vw;
     gap: 2rem;
-}
-.track-container {
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    width: 60vw;
+
+    .control-ui {
+        display: grid;
+        grid-template-rows: auto auto;
+    }
+    .track-container {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        width: 60vw;
+    }
 }
 </style>
