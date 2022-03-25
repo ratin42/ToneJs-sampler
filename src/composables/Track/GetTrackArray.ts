@@ -17,6 +17,7 @@ class Track {
     maxSampleLength: number = 20;
     offset: number = 0;
     currentPitch: number = 16;
+    currentVolume: number = 0;
     sliderValue: any = ref(0);
 
     constructor(id: number, sampleUrl: string, color: string) {
@@ -49,6 +50,8 @@ class Track {
 
     changePitch = (value: number) => {
         if (value < 0 || value > 32) {
+            // Block the slider to the pitch limit
+
             this.sliderValue.value = this.currentPitch;
         } else {
             let pitch = parseFloat(noteTranslation[value].frequency);

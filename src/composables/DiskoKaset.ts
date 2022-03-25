@@ -95,16 +95,20 @@ class DiskoKaset {
                 this.setSliderToTune();
                 break;
             case "mix":
-                this.resetSlider();
+                this.setSliderToVolume();
                 break;
             default:
                 this.resetSlider();
         }
     }
 
+    setSliderToVolume() {
+        this.trackArray.value.forEach((track) => {
+            track.sliderValue = track.currentVolume;
+        });
+    }
     setSliderToTune() {
         this.trackArray.value.forEach((track) => {
-            console.log("track", track.sliderValue);
             track.sliderValue = track.currentPitch;
         });
     }
@@ -121,6 +125,13 @@ class DiskoKaset {
 
         if (this.controlMode.value === "tune") {
             sliderControlMode["tune"].function(
+                this.trackArray,
+                this.trackIdToBank(trackId),
+                value
+            );
+        }
+        if (this.controlMode.value === "mix") {
+            sliderControlMode["mix"].function(
                 this.trackArray,
                 this.trackIdToBank(trackId),
                 value
