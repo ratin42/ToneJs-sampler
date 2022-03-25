@@ -5,6 +5,7 @@
 import { ref, Ref } from "vue";
 import { getNewTrackArray, Track } from "./Track/GetTrackArray";
 import type { trackArray } from "./Track/GetTrackArray";
+import { sliderControlMode } from "@/composables/SliderMode/ControlModeStruct";
 
 class DiskoKaset {
     trackBank: trackArray[] = [];
@@ -102,12 +103,6 @@ class DiskoKaset {
     }
 
     setSliderToTune() {
-        // this.trackBank.forEach((trackArray) => {
-        //     trackArray.value.forEach((track) => {
-        //         console.log("track", track.sliderValue);
-        //         // track.sliderValue = track.currentPitch;
-        //     });
-        // });
         this.trackArray.value.forEach((track) => {
             console.log("track", track.sliderValue);
             track.sliderValue = track.currentPitch;
@@ -120,14 +115,16 @@ class DiskoKaset {
     }
 
     handleSlider(trackId: number, value: number) {
-        console.log("value", value);
+        // call chooseFunction(this.controlMode.value)
+        // that will call the function that is associated with the control mode
+        // it is represented by a struct in composables/SliderMode/ControlModeStruct
+
         if (this.controlMode.value === "tune") {
-            let track = this.trackArray.value.find(
-                (track) => track.id === this.trackIdToBank(trackId)
+            sliderControlMode["tune"].function(
+                this.trackArray,
+                this.trackIdToBank(trackId),
+                value
             );
-            if (track) {
-                track.changePitch(value);
-            }
         }
     }
 }
