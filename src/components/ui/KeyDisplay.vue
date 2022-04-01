@@ -39,7 +39,7 @@ const untrigger = () => {
 
 window.addEventListener("keydown", (e) => {
     e.preventDefault();
-    // console.log(e.key);
+    // console.log(e);
     if (e.key === props.keyBoardInput) {
         if (!pressedStatus.value) {
             trigger();
@@ -56,6 +56,7 @@ window.addEventListener("keyup", (e) => {
 <template>
     <div
         class="key-content noselect"
+        name="test"
         v-bind:class="{ 'key-pressed': pressedStatus }"
         @mousedown="trigger()"
         @mouseup="untrigger()"

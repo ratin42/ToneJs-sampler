@@ -6,6 +6,8 @@ import Sampler from "@/components/Sampler/Sampler.vue";
 import { loadKeyMapping } from "@/composables/Controler/KeyMapping";
 import { dk } from "@/composables/DiskoKaset";
 
+// ORIGINAL SCREEN IS 16 * 2
+
 // Tone.setContext(new Tone.Context({ latencyHint: "interactive" }))
 // Tone.debug = true
 // const { audioContext } = useGetAudioContext()
@@ -25,7 +27,7 @@ if (!window.localStorage.getItem("keyMapping")) {
         <span v-if="wait">
             <p>loading...</p>
         </span>
-        <span v-else>
+        <span class="sampler-container" v-else>
             <!-- <button v-on:click="Tone.start()">Start Tone</button> -->
             <Sampler> </Sampler>
         </span>
@@ -34,6 +36,16 @@ if (!window.localStorage.getItem("keyMapping")) {
 
 <style>
 #desktop {
+    width: 100%;
+    height: 100%;
+    margin: 0rem;
+}
+.sampler-container {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */

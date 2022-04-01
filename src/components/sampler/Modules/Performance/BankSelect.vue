@@ -54,7 +54,7 @@ let handleUnpress = (key: string) => {
     display: grid;
     grid-template-rows: 10vw;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
 
     .button-text-container {
         display: grid;

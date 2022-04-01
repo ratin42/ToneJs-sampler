@@ -44,4 +44,15 @@ function changeVolume(
     }
 }
 
-export { changePitch, changeVolume };
+function changeDecay(
+    trackArray: Ref<trackArray>,
+    trackId: number,
+    value: number
+) {
+    let track = getTrackById(trackArray, trackId);
+    if (track) {
+        track.currentDecay = value / 10;
+    }
+}
+
+export { changePitch, changeVolume, changeDecay };

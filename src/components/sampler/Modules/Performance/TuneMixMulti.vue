@@ -30,7 +30,11 @@ let handleUnpress = (key: string) => {
             <span class="switch-text">
                 <span class="switch-option">
                     <LedRed :status="dk.controlMode.value == 'tune'"></LedRed>
-                    <p>Tune/Decay</p>
+                    <p>Tune</p>
+                </span>
+                <span class="switch-option">
+                    <LedRed :status="dk.controlMode.value == 'decay'"></LedRed>
+                    <p>Decay</p>
                 </span>
                 <span class="switch-option">
                     <LedRed :status="dk.controlMode.value == 'mix'"></LedRed>

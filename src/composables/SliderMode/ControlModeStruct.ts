@@ -1,4 +1,4 @@
-import { changePitch, changeVolume } from "./MixMode";
+import { changePitch, changeVolume, changeDecay } from "./MixMode";
 
 const sliderControlMode = {
     tune: {
@@ -6,6 +6,9 @@ const sliderControlMode = {
     },
     mix: {
         function: changeVolume,
+    },
+    decay: {
+        function: changeDecay,
     },
 };
 

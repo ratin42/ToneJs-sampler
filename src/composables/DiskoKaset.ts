@@ -6,16 +6,26 @@ import { ref, Ref } from "vue";
 import { getNewTrackArray, Track } from "./Track/GetTrackArray";
 import type { trackArray } from "./Track/GetTrackArray";
 import { sliderControlMode } from "@/composables/SliderMode/ControlModeStruct";
+import * as Tone from "tone";
 
 class DiskoKaset {
     trackBank: trackArray[] = [];
     trackArray: Ref<trackArray> = ref([]);
     controlMode: Ref<string> = ref("");
     currentBank: Ref<number> = ref(0);
+    transposeIndex: Ref<number> = ref(0);
 
     constructor() {
         this.trackBank = getNewTrackArray();
         this.trackArray.value = this.trackBank[0];
+    }
+
+    startTransport() {
+        if (Tone.Transport.state === "started") {
+            Tone.Transport.stop();
+        } else {
+            Tone.Transport.start();
+        }
     }
 
     trackIdToBank(trackId: number) {
@@ -27,6 +37,11 @@ class DiskoKaset {
             (track) => track.id === this.trackIdToBank(trackId)
         );
         if (track) {
+            // let index = (this.transposeIndex.value % 16) - 1;
+            // if (index < 0) {
+            //     index = 15;
+            // }
+            // track.record[index] = 1;
             track.startPlayer();
         }
     }
@@ -75,6 +90,10 @@ class DiskoKaset {
                 this.controlModeBind();
                 break;
             case "tune":
+                this.controlMode.value = "decay";
+                this.controlModeBind();
+                break;
+            case "decay":
                 this.controlMode.value = "mix";
                 this.controlModeBind();
                 break;
@@ -89,32 +108,34 @@ class DiskoKaset {
     controlModeBind() {
         switch (this.controlMode.value) {
             case "":
-                this.resetSlider();
+                this.setSliderTo(0);
                 break;
             case "tune":
-                this.setSliderToTune();
+                this.setSliderTo("currentPitch");
+                break;
+            case "decay":
+                this.setSliderToDecay();
                 break;
             case "mix":
-                this.setSliderToVolume();
+                this.setSliderTo("currentVolume");
                 break;
             default:
-                this.resetSlider();
+                this.setSliderTo(0);
         }
     }
 
-    setSliderToVolume() {
+    setSliderToDecay() {
         this.trackArray.value.forEach((track) => {
-            track.sliderValue = track.currentVolume;
+            track.sliderValue = track.currentDecay * 10;
         });
     }
-    setSliderToTune() {
+    setSliderTo(value: string | number) {
         this.trackArray.value.forEach((track) => {
-            track.sliderValue = track.currentPitch;
-        });
-    }
-    resetSlider() {
-        this.trackArray.value.forEach((track) => {
-            track.sliderValue = 0;
+            if (typeof value === "string") {
+                track.sliderValue = (track as any)[value];
+            } else {
+                track.sliderValue = value;
+            }
         });
     }
 
@@ -123,20 +144,11 @@ class DiskoKaset {
         // that will call the function that is associated with the control mode
         // it is represented by a struct in composables/SliderMode/ControlModeStruct
 
-        if (this.controlMode.value === "tune") {
-            sliderControlMode["tune"].function(
-                this.trackArray,
-                this.trackIdToBank(trackId),
-                value
-            );
-        }
-        if (this.controlMode.value === "mix") {
-            sliderControlMode["mix"].function(
-                this.trackArray,
-                this.trackIdToBank(trackId),
-                value
-            );
-        }
+        (sliderControlMode as any)[this.controlMode.value].function(
+            this.trackArray,
+            this.trackIdToBank(trackId),
+            value
+        );
     }
 }
 

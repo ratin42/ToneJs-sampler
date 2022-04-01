@@ -76,14 +76,16 @@ const sliderDecrement = (key: string) => {
                 v-bind="props"
             ></KeyDisplay>
         </div>
+        <label for="test">test</label>
     </div>
 </template>
 
 <style lang="scss">
 .track {
     display: grid;
-    grid-template-rows: 10vw 5vw;
-    grid-gap: 5rem;
+    grid-template-rows: 60% 40%;
+    justify-content: center;
+    align-items: center;
 
     .slider {
         grid-row: 1/2;

@@ -19,6 +19,8 @@ class Track {
     currentPitch: number = 16;
     currentVolume: number = 0;
     sliderValue: any = ref(0);
+    record: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    currentDecay: number = 0.2;
 
     constructor(id: number, sampleUrl: string, color: string) {
         this.id = id;
@@ -30,6 +32,20 @@ class Track {
         });
     }
 
+    checkRecord(index: number, time: number) {
+        // index = index--;
+        // if (index < 0) {
+        //     index = 16;
+        // }
+        if (this.record[index]) {
+            // this.startPlayer();
+            if (this.player) {
+                this.player.start(time);
+            }
+            console.log("this.record", this.record);
+        }
+    }
+
     startPlayer = () => {
         if (this.player) {
             this.player.start(0, this.offset);
@@ -37,7 +53,7 @@ class Track {
     };
     stopPlayer = () => {
         if (this.player) {
-            this.player.stop(0);
+            this.player.stop("+" + this.currentDecay.toString());
         }
     };
 

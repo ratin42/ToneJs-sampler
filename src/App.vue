@@ -3,10 +3,16 @@ import DesktopVue from "@/components/Desktop.vue";
 </script>
 
 <template>
-    <DesktopVue></DesktopVue>
+    <div id="container">
+        <DesktopVue></DesktopVue>
+    </div>
 </template>
 
 <style lang="scss">
+#container {
+    width: 100vw;
+    height: 100vh;
+}
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -14,18 +20,18 @@ import DesktopVue from "@/components/Desktop.vue";
     text-align: center;
 
     // light mode
-    color: #2c3e50;
+    // color: #2c3e50;
 
     // dark mode
     // color: var(--device-yellow);
-    margin-top: 60px;
-}
-html {
-    height: 100%;
+    // margin-top: 60px;
 }
 body {
-    min-height: 100%;
-    //     background-color: #1e1e1ec7;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0rem;
+    padding: 0rem;
 }
 
 html,
@@ -40,9 +46,5 @@ body {
 
     // dark mode
     // background-color: #312f28;
-
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
 }
 </style>
