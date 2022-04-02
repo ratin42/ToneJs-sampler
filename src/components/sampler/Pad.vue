@@ -59,6 +59,7 @@ const sliderDecrement = (key: string) => {
     <div class="track">
         <!-- Slider Component with screen for the sliderValue -->
         <Slider
+            name="slider"
             class="slider"
             v-bind="props"
             :slider-down="sliderDown"
@@ -67,16 +68,18 @@ const sliderDecrement = (key: string) => {
             :slider-increment="sliderIncrement"
             :slider-decrement="sliderDecrement"
         ></Slider>
+        <label for="slider">{{ props.trackId + 1 }}</label>
         <div class="pad-content">
             <!-- The pad -->
             <KeyDisplay
+                name="pad"
                 :keyBoardInput="triggerKey"
                 :pressed="handlePress"
                 :unpressed="handleUnpress"
                 v-bind="props"
             ></KeyDisplay>
         </div>
-        <label for="test">test</label>
+        <label for="pad">{{ props.trackId + 1 }}</label>
     </div>
 </template>
 
@@ -86,17 +89,21 @@ const sliderDecrement = (key: string) => {
     grid-template-rows: 60% 40%;
     justify-content: center;
     align-items: center;
+    grid-template-rows: 55% 5% 35% 5%;
 
     .slider {
         grid-row: 1/2;
         height: 10vw;
         width: 5vw;
+        // margin-bottom: 0.2rem;
     }
     .pad-content {
         display: grid;
         width: 5vw;
         height: 5vw;
         font-size: 1.5rem;
+        align-self: end;
+        margin-bottom: 0.6rem;
     }
 }
 </style>

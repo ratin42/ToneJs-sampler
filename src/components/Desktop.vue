@@ -34,11 +34,16 @@ if (!window.localStorage.getItem("keyMapping")) {
     </div>
 </template>
 
-<style>
+<style lang="scss">
 #desktop {
     width: 100%;
     height: 100%;
     margin: 0rem;
+
+    label {
+        font-size: var(--label);
+        // font-weight: bold;
+    }
 }
 .sampler-container {
     display: grid;

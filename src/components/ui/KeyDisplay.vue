@@ -56,7 +56,6 @@ window.addEventListener("keyup", (e) => {
 <template>
     <div
         class="key-content noselect"
-        name="test"
         v-bind:class="{ 'key-pressed': pressedStatus }"
         @mousedown="trigger()"
         @mouseup="untrigger()"
@@ -84,10 +83,10 @@ window.addEventListener("keyup", (e) => {
 
     // light mode
     border-style: solid;
-    border-color: var(--brand-yellow);
+    border-color: var(--disko-background);
     border-width: 2px;
-    background: var(--screen-black);
-    box-shadow: -0.388em 0.5em 0.438em #d9aa2b, 0.5em -0.5em 1.063em #ffe63b;
+    background: var(--key-unpressed);
+    box-shadow: -0.388em 0.5em 0.438em #d9aa2b, 0.3em -0.3em 1.063em #ffe63b;
 
     // dark mode
     // background: #312f28;
@@ -98,7 +97,11 @@ window.addEventListener("keyup", (e) => {
 
         // light mode
         background: #312f28;
-        background-image: linear-gradient(37deg, #444238, #212223) !important;
+        background-image: linear-gradient(
+            231deg,
+            var(--key-pressed-shadow),
+            var(--key-pressed-light)
+        ) !important;
 
         // dark mode
         // background: #312f28;

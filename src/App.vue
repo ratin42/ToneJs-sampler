@@ -14,10 +14,13 @@ import DesktopVue from "@/components/Desktop.vue";
     height: 100vh;
 }
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    // font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+
+    font-family: futura-pt, Avenir, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
     // light mode
     // color: #2c3e50;
@@ -29,7 +32,7 @@ import DesktopVue from "@/components/Desktop.vue";
 body {
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    // overflow: hidden;
     margin: 0rem;
     padding: 0rem;
 }
@@ -42,7 +45,7 @@ body {
     cursor: url("/cursor.png"), auto;
 
     // light mode
-    background-color: var(--brand-yellow);
+    background-color: var(--disko-background);
 
     // dark mode
     // background-color: #312f28;

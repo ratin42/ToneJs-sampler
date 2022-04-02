@@ -25,6 +25,7 @@ provide("keyMapping", keyMapping);
 #master-control {
     display: grid;
     grid-template-rows: 30% 20% 50%;
+    margin-left: 3rem;
 
     .numpad-player-control {
         display: grid;
@@ -35,6 +36,7 @@ provide("keyMapping", keyMapping);
         .numpad {
             grid-column: 1/2;
             grid-row: 1/2;
+            display: grid;
         }
         .player-control {
             display: grid;
