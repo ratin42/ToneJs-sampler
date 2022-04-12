@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import RunStop from "./RunStop.vue";
 import Numpad from "./Numpad.vue";
+import Screen from "./Screen.vue";
 import { getKeyMapping } from "@/composables/Controler/KeyMapping";
 import { provide } from "vue";
 
@@ -10,6 +11,7 @@ provide("keyMapping", keyMapping);
 
 <template>
     <div id="master-control">
+        <Screen></Screen>
         <span class="numpad-player-control">
             <span class="numpad">
                 <Numpad></Numpad>

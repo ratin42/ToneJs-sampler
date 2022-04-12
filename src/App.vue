@@ -35,6 +35,7 @@ body {
     // overflow: hidden;
     margin: 0rem;
     padding: 0rem;
+    color: var(--psd-darkest-grey);
 }
 
 html,

@@ -14,6 +14,7 @@ class DiskoKaset {
     controlMode: Ref<string> = ref("");
     currentBank: Ref<number> = ref(0);
     transposeIndex: Ref<number> = ref(0);
+    screen: Ref<object> = ref({ line1: "", line2: "" });
 
     constructor() {
         this.trackBank = getNewTrackArray();

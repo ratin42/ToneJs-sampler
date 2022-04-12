@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
         text-align: start;
     }
     .line {
-        border: 1px solid red;
+        border: 1px solid var(--red);
         width: 100%;
         height: 0rem;
         align-self: end;

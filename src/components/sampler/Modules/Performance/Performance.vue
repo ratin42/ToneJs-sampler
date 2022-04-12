@@ -70,7 +70,7 @@ Tone.Transport.scheduleRepeat((time) => {
 <style lang="scss" scoped>
 #performance {
     display: grid;
-    grid-template-columns: 16% 84%;
+    grid-template-columns: 20% 80%;
     grid-template-rows: 12% auto;
     align-items: start;
     justify-content: start;

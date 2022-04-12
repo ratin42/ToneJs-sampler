@@ -1,4 +1,8 @@
 let initKeyMapping = {
+    setup: {
+        triggerKey: "o",
+        label: "o",
+    },
     performance: {
         tuneMixMulti: {
             triggerKey: "Tab",
