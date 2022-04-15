@@ -2,11 +2,13 @@
 // Handle playing mode
 // Get from 'GetTrackArray' an array of 8 Track Objects
 
-import { ref, Ref } from "vue";
+import { ref, Ref, reactive } from "vue";
 import { getNewTrackArray, Track } from "./Track/GetTrackArray";
 import type { trackArray } from "./Track/GetTrackArray";
 import { sliderControlMode } from "@/composables/SliderMode/ControlModeStruct";
 import * as Tone from "tone";
+
+const initFunctions = ["D", "I", "S", "K", "O", "K", "A", "S", "E", "T"];
 
 class DiskoKaset {
     trackBank: trackArray[] = [];
@@ -15,22 +17,24 @@ class DiskoKaset {
     currentBank: Ref<number> = ref(0);
     transposeIndex: Ref<number> = ref(0);
     screen: Ref<object> = ref({ line1: "", line2: "" });
+    functionDescription = ref(initFunctions);
 
     constructor() {
         this.trackBank = getNewTrackArray();
         this.trackArray.value = this.trackBank[0];
     }
 
+    trackIdToBank(trackId: number) {
+        return trackId + this.currentBank.value * 8;
+    }
+
     startTransport() {
+        // Called by RunStop component to start the transport
         if (Tone.Transport.state === "started") {
             Tone.Transport.stop();
         } else {
             Tone.Transport.start();
         }
-    }
-
-    trackIdToBank(trackId: number) {
-        return trackId + this.currentBank.value * 8;
     }
 
     playSound(trackId: number) {
@@ -55,7 +59,15 @@ class DiskoKaset {
         }
     }
 
+    setFunctionDescription(functions: string[]) {
+        this.functionDescription.value = functions;
+    }
+    resetFunctionDescription() {
+        this.functionDescription.value = initFunctions;
+    }
+
     setBank() {
+        // Called by BankSelect component to switch between banks
         switch (this.currentBank.value) {
             case 0:
                 this.currentBank.value = 1;
@@ -84,7 +96,11 @@ class DiskoKaset {
         }
     }
 
+    // ******************************************************
+    // Control Mode handler
+    // ******************************************************
     setControlMode() {
+        // Called by TuneMixMulti component to switch between control modes
         switch (this.controlMode.value) {
             case "":
                 this.controlMode.value = "tune";
@@ -107,6 +123,8 @@ class DiskoKaset {
         }
     }
     controlModeBind() {
+        // Called at control mode change to handle the sliders value and behavior
+        // needed to avoid repetition has slider as to be set itch time the user switch bank
         switch (this.controlMode.value) {
             case "":
                 this.setSliderTo(0);
@@ -125,6 +143,9 @@ class DiskoKaset {
         }
     }
 
+    // ******************************************************
+    // Slider Setter
+    // ******************************************************
     setSliderToDecay() {
         this.trackArray.value.forEach((track) => {
             track.sliderValue = track.currentDecay * 10;
@@ -139,7 +160,6 @@ class DiskoKaset {
             }
         });
     }
-
     handleSlider(trackId: number, value: number) {
         // call chooseFunction(this.controlMode.value)
         // that will call the function that is associated with the control mode
