@@ -9,16 +9,21 @@ let dk: any = inject("dk");
 let keyMapping: any = getKeyMapping("setup");
 
 const functions = [
-    "Multi Pitch",
-    "Multi Level",
-    "Exit Multi Mode",
-    "Define Mix",
-    "Select Mix",
-    "Loop/Truncate",
-    "Delete Sound",
-    "",
-    "",
-    "",
+    {
+        name: "Multi Pitch",
+        function: () => {
+            console.log("helloloo");
+        },
+    },
+    { name: "Multi Level", function: () => {} },
+    { name: "Exit Multi Mode", function: () => {} },
+    { name: "Define Mix", function: () => {} },
+    { name: "Select Mix", function: () => {} },
+    { name: "Loop/Truncate", function: () => {} },
+    { name: "Delete Sound", function: () => {} },
+    { name: "", function: () => {} },
+    { name: "", function: () => {} },
+    { name: "", function: () => {} },
 ];
 
 let isOn: Ref<boolean> = ref(false);

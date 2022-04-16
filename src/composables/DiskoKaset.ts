@@ -8,7 +8,23 @@ import type { trackArray } from "./Track/GetTrackArray";
 import { sliderControlMode } from "@/composables/SliderMode/ControlModeStruct";
 import * as Tone from "tone";
 
-const initFunctions = ["D", "I", "S", "K", "O", "K", "A", "S", "E", "T"];
+interface DkFunctions {
+    name?: string;
+    function?: Function;
+}
+
+const initFunctions: DkFunctions[] = [
+    { name: "D", function: () => {} },
+    { name: "I", function: () => {} },
+    { name: "S", function: () => {} },
+    { name: "K", function: () => {} },
+    { name: "O", function: () => {} },
+    { name: "K", function: () => {} },
+    { name: "A", function: () => {} },
+    { name: "S", function: () => {} },
+    { name: "E", function: () => {} },
+    { name: "T", function: () => {} },
+];
 
 class DiskoKaset {
     trackBank: trackArray[] = [];
@@ -17,7 +33,7 @@ class DiskoKaset {
     currentBank: Ref<number> = ref(0);
     transposeIndex: Ref<number> = ref(0);
     screen: Ref<object> = ref({ line1: "", line2: "" });
-    functionDescription = ref(initFunctions);
+    functionDescription: Ref<DkFunctions[]> = ref(initFunctions);
 
     constructor() {
         this.trackBank = getNewTrackArray();
@@ -59,7 +75,7 @@ class DiskoKaset {
         }
     }
 
-    setFunctionDescription(functions: string[]) {
+    setFunctionDescription(functions: DkFunctions[]) {
         this.functionDescription.value = functions;
     }
     resetFunctionDescription() {

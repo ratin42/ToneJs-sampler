@@ -7,11 +7,11 @@ import KeyDisplay from "@/components/ui/KeyDisplay.vue";
 let keyMapping: any = getKeyMapping("masterControl");
 let dk: any = inject("dk");
 
-const handlePress = (value: number) => {
-    console.log("pressed ", value);
+const handlePress = (callback: Function) => {
+    callback();
 };
 const handleUnpress = (value: number) => {
-    console.log("unpressed ", value);
+    // console.log("unpressed ", value);
 };
 </script>
 
@@ -28,12 +28,17 @@ const handleUnpress = (value: number) => {
                 name="button"
                 :keyBoardInput="item.triggerKey"
                 :label="item.label"
-                :pressed="() => handlePress(item.value)"
+                :pressed="
+                    () =>
+                        handlePress(
+                            dk.functionDescription.value[index].function
+                        )
+                "
                 :unpressed="() => handleUnpress(item.value)"
             >
             </KeyDisplay>
             <label class="label-button" for="button">{{
-                dk.functionDescription.value[index]
+                dk.functionDescription.value[index].name
             }}</label>
         </span>
         <!-- </span> -->

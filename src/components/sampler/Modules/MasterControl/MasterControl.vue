@@ -13,9 +13,9 @@ provide("keyMapping", keyMapping);
     <div id="master-control">
         <Screen></Screen>
         <span class="numpad-player-control">
-            <span class="numpad">
+            <!-- <span class="numpad">
                 <Numpad></Numpad>
-            </span>
+            </span> -->
             <span class="player-control">
                 <RunStop></RunStop>
             </span>
