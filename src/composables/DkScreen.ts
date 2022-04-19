@@ -4,17 +4,14 @@ class DkScreen {
     line: Ref<string[]> = ref(["", ""]);
 
     constructor() {
-        this.resetLine();
+        this.setHome();
     }
 
-    getHomeLine(): string[] {
-        return ["Seq 01    bpm = 90.0", "i"];
-    }
     write(nbr: number, text: string) {
         this.line.value[nbr] = text;
     }
-    resetLine() {
-        this.line.value = this.getHomeLine();
+    setHome() {
+        this.line.value = ["Seq 01    bpm = 90.0", "i"];
     }
 }
 

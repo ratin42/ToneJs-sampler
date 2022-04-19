@@ -41,7 +41,7 @@ let handleUnpress = (key: string) => {
                     <p>Mix</p>
                 </span>
                 <span class="switch-option">
-                    <LedRed :status="dk.controlMode.value == 'multi'"></LedRed>
+                    <LedRed :status="dk.multiMode.value"></LedRed>
                     <p>Multi Mode</p>
                 </span>
             </span>

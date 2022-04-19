@@ -1,25 +1,26 @@
-import type { TrackMapping } from "@/composables/Track/TrackMapping";
+import {
+    setTrackMapping,
+    TrackMapping,
+} from "@/composables/Track/TrackMapping";
 
-function setMultiTrack(dk: any, trackId: number) {
-    // dk.resetTrackPlayCallBack();
-}
-
+// Multi Pitch
 function multiPitchHandler(dk: any, trackId: number) {
+    let currentTrack = dk.trackArray.value[trackId];
+    let pitchIndex = 9;
+
     dk.resetTrackPlayCallBack();
     dk.screen.write(1, "Track " + trackId);
-    let currentTrack = dk.trackArray.value[trackId];
-    let pitchIndex = 8;
-    dk.trackMapping.value.forEach((track: TrackMapping) => {
+
+    dk.trackMapping.forEach((track: TrackMapping) => {
         track.play = currentTrack.startPlayer;
         track.stop = currentTrack.stopPlayer;
+        track.volume = currentTrack.currentVolume;
         track.pitch = pitchIndex;
         track.trackId = trackId;
 
-        console.log("pitchIndex: " + pitchIndex);
         pitchIndex += 1;
     });
-    console.log("dk is ", dk);
-    console.log("trackIs is ", trackId);
+    dk.multiMode.value = true;
 }
 
 function setUpMultiPitch(dk: any) {
@@ -28,4 +29,36 @@ function setUpMultiPitch(dk: any) {
     dk.screen.write(1, "Select a Track");
 }
 
-export { setUpMultiPitch };
+// Multi Level
+function multiLevelHandler(dk: any, trackId: number) {
+    let currentTrack = dk.trackArray.value[trackId];
+    let levelIndex = currentTrack.currentVolume - 16;
+
+    dk.resetTrackPlayCallBack();
+    dk.screen.write(1, "Track " + trackId);
+
+    dk.trackMapping.forEach((track: TrackMapping) => {
+        track.play = currentTrack.startPlayer;
+        track.stop = currentTrack.stopPlayer;
+        track.pitch = currentTrack.currentPitch;
+        track.volume = levelIndex;
+        track.trackId = trackId;
+
+        levelIndex += 2;
+    });
+    dk.multiMode.value = true;
+}
+
+function setUpMultiLevel(dk: any) {
+    dk.trackPlayCallBack = (trackId: number) => multiLevelHandler(dk, trackId);
+    dk.screen.write(0, "Multi-Level");
+    dk.screen.write(1, "Select a Track");
+}
+
+// Exit Multi Mode
+function exitMultiMode(dk: any) {
+    dk.resetTrackMapping();
+    dk.screen.setHome();
+    dk.multiMode.value = false;
+}
+export { setUpMultiPitch, setUpMultiLevel, exitMultiMode };

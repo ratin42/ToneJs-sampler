@@ -32,18 +32,19 @@ const initFunctions: DkFunctions[] = [
 class DiskoKaset {
     trackBank: trackArray[] = [];
     trackArray: Ref<trackArray> = ref([]);
-    trackMapping: Ref<TrackMapping[]> = ref([]);
+    trackMapping: TrackMapping[] = [];
     controlMode: Ref<string> = ref("");
     currentBank: Ref<number> = ref(0);
     screen: DkScreen = new DkScreen();
     transposeIndex: Ref<number> = ref(0);
     functionDescription: Ref<DkFunctions[]> = ref(initFunctions);
     trackPlayCallBack: Function | null = null;
+    multiMode: Ref<boolean> = ref(false);
 
     constructor() {
         this.trackBank = getNewTrackArray();
         this.trackArray.value = this.trackBank[0];
-        this.trackMapping.value = setTrackMapping(this.trackArray);
+        this.trackMapping = setTrackMapping(this.trackArray);
     }
 
     trackIdToBank(trackId: number) {
@@ -63,13 +64,21 @@ class DiskoKaset {
         this.trackPlayCallBack = null;
     }
 
+    resetTrackMapping() {
+        this.trackMapping = setTrackMapping(this.trackArray);
+    }
     playSound(trackId: number) {
         console.time("playSound");
         if (this.trackPlayCallBack) {
             this.trackPlayCallBack(trackId);
         }
-        this.trackMapping.value[trackId].play(
-            this.trackMapping.value[trackId].pitch
+
+        // let track = this.trackMapping[trackId];
+        // track.play(track.pitch);
+
+        this.trackMapping[trackId].play(
+            this.trackMapping[trackId].pitch,
+            this.trackMapping[trackId].volume
         );
         //     // let index = (this.transposeIndex.value % 16) - 1;
         //     // if (index < 0) {
@@ -78,7 +87,7 @@ class DiskoKaset {
         //     // track.record[index] = 1;
     }
     stopSound(trackId: number) {
-        this.trackMapping.value[trackId].stop();
+        this.trackMapping[trackId].stop();
     }
 
     // ******************************************************
@@ -97,7 +106,7 @@ class DiskoKaset {
         let newBank = (this.currentBank.value + 1) % 4;
         this.currentBank.value = newBank;
         this.trackArray.value = this.trackBank[newBank];
-        this.trackMapping.value = setTrackMapping(this.trackArray);
+        this.trackMapping = setTrackMapping(this.trackArray);
         this.controlModeBind();
     }
 

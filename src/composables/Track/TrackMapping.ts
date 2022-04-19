@@ -18,8 +18,8 @@ function setTrackMapping(trackArray: Ref<trackArray>) {
         let tm = {
             play: track.startPlayer,
             stop: track.stopPlayer,
-            pitch: 16,
-            volume: 0,
+            pitch: track.currentPitch,
+            volume: track.currentVolume,
             trackId: index,
             sliderUp: () => {},
             sliderDown: () => {},

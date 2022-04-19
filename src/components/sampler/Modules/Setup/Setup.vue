@@ -2,7 +2,11 @@
 import ModuleTitle from "@/components/ui/ModuleTitle.vue";
 import KeyDisplayVue from "@/components/ui/KeyDisplay.vue";
 import LedRed from "@/components/ui/LedRed.vue";
-import { setUpMultiPitch } from "@/composables/FunctionHandler/SetupFunctions";
+import {
+    setUpMultiPitch,
+    setUpMultiLevel,
+    exitMultiMode,
+} from "@/composables/FunctionHandler/SetupFunctions";
 import { getKeyMapping } from "@/composables/Controler/KeyMapping";
 import { inject, ref, Ref } from "vue";
 
@@ -14,8 +18,8 @@ const functions = [
         name: "Multi Pitch",
         function: () => setUpMultiPitch(dk),
     },
-    { name: "Multi Level", function: () => {} },
-    { name: "Exit Multi Mode", function: () => {} },
+    { name: "Multi Level", function: () => setUpMultiLevel(dk) },
+    { name: "Exit Multi Mode", function: () => exitMultiMode(dk) },
     { name: "Define Mix", function: () => {} },
     { name: "Select Mix", function: () => {} },
     { name: "Loop/Truncate", function: () => {} },

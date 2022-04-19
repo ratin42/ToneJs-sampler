@@ -46,10 +46,12 @@ class Track {
         }
     }
 
-    startPlayer = (pitch: number) => {
+    startPlayer = (pitch: number, volume: number) => {
         if (this.player) {
+            // this.player.stop();
             this.player.playbackRate =
                 parseFloat(noteTranslation[pitch].frequency) / 261.637;
+            this.player.volume.value = volume;
             console.timeEnd("playSound");
             this.player.start(0, this.offset);
         }

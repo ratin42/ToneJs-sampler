@@ -1,7 +1,10 @@
 -   Delete the track array and replace it by the trackMapping
 
 -   MultiMode:
-    -   Add multiLevel
-    -   Turn on multiMode light
+
+    -   fix slider modifier with track mapping
+    -   handle bank switching in MultiMode
     -   refacto multiPitchHandler function
-    -   refacto slider modifier
+
+-   Sequencing
+    -   add Mute Solo in Setup Menu
