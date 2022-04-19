@@ -46,11 +46,15 @@ class Track {
         }
     }
 
-    startPlayer = () => {
+    startPlayer = (pitch: number) => {
         if (this.player) {
+            this.player.playbackRate =
+                parseFloat(noteTranslation[pitch].frequency) / 261.637;
+            console.timeEnd("playSound");
             this.player.start(0, this.offset);
         }
     };
+
     stopPlayer = () => {
         if (this.player) {
             this.player.stop("+" + this.currentDecay.toString());
@@ -65,6 +69,7 @@ class Track {
     };
 
     changePitch = (value: number) => {
+        console.time("changePitch");
         if (value < 0 || value > 32) {
             // Block the slider to the pitch limit
 
@@ -78,6 +83,7 @@ class Track {
                 this.player.playbackRate = pitch;
             }
         }
+        console.timeEnd("changePitch");
     };
 }
 

@@ -2,8 +2,11 @@
 // Handle playing mode
 // Get from 'GetTrackArray' an array of 8 Track Objects
 
-import { ref, Ref, reactive } from "vue";
-import { getNewTrackArray, Track } from "./Track/GetTrackArray";
+import { ref, Ref } from "vue";
+import { getNewTrackArray } from "./Track/GetTrackArray";
+import { DkScreen } from "./DkScreen";
+import { setTrackMapping } from "./Track/TrackMapping";
+import type { TrackMapping } from "./Track/TrackMapping";
 import type { trackArray } from "./Track/GetTrackArray";
 import { sliderControlMode } from "@/composables/SliderMode/ControlModeStruct";
 import * as Tone from "tone";
@@ -29,15 +32,18 @@ const initFunctions: DkFunctions[] = [
 class DiskoKaset {
     trackBank: trackArray[] = [];
     trackArray: Ref<trackArray> = ref([]);
+    trackMapping: Ref<TrackMapping[]> = ref([]);
     controlMode: Ref<string> = ref("");
     currentBank: Ref<number> = ref(0);
+    screen: DkScreen = new DkScreen();
     transposeIndex: Ref<number> = ref(0);
-    screen: Ref<object> = ref({ line1: "", line2: "" });
     functionDescription: Ref<DkFunctions[]> = ref(initFunctions);
+    trackPlayCallBack: Function | null = null;
 
     constructor() {
         this.trackBank = getNewTrackArray();
         this.trackArray.value = this.trackBank[0];
+        this.trackMapping.value = setTrackMapping(this.trackArray);
     }
 
     trackIdToBank(trackId: number) {
@@ -53,63 +59,46 @@ class DiskoKaset {
         }
     }
 
-    playSound(trackId: number) {
-        let track = this.trackArray.value.find(
-            (track) => track.id === this.trackIdToBank(trackId)
-        );
-        if (track) {
-            // let index = (this.transposeIndex.value % 16) - 1;
-            // if (index < 0) {
-            //     index = 15;
-            // }
-            // track.record[index] = 1;
-            track.startPlayer();
-        }
-    }
-    stopSound(trackId: number) {
-        let track = this.trackArray.value.find(
-            (track) => track.id === this.trackIdToBank(trackId)
-        );
-        if (track) {
-            track.stopPlayer();
-        }
+    resetTrackPlayCallBack() {
+        this.trackPlayCallBack = null;
     }
 
+    playSound(trackId: number) {
+        console.time("playSound");
+        if (this.trackPlayCallBack) {
+            this.trackPlayCallBack(trackId);
+        }
+        this.trackMapping.value[trackId].play(
+            this.trackMapping.value[trackId].pitch
+        );
+        //     // let index = (this.transposeIndex.value % 16) - 1;
+        //     // if (index < 0) {
+        //     //     index = 15;
+        //     // }
+        //     // track.record[index] = 1;
+    }
+    stopSound(trackId: number) {
+        this.trackMapping.value[trackId].stop();
+    }
+
+    // ******************************************************
+    // Function Description
+    // ******************************************************
     setFunctionDescription(functions: DkFunctions[]) {
         this.functionDescription.value = functions;
     }
     resetFunctionDescription() {
         this.functionDescription.value = initFunctions;
+        this.screen.resetLine();
     }
 
     setBank() {
         // Called by BankSelect component to switch between banks
-        switch (this.currentBank.value) {
-            case 0:
-                this.currentBank.value = 1;
-                this.trackArray.value = this.trackBank[1];
-                this.controlModeBind();
-                break;
-            case 1:
-                this.currentBank.value = 2;
-                this.trackArray.value = this.trackBank[2];
-                this.controlModeBind();
-                break;
-            case 2:
-                this.currentBank.value = 3;
-                this.trackArray.value = this.trackBank[3];
-                this.controlModeBind();
-                break;
-            case 3:
-                this.currentBank.value = 0;
-                this.trackArray.value = this.trackBank[0];
-                this.controlModeBind();
-                break;
-            default:
-                this.currentBank.value = 0;
-                this.trackArray.value = this.trackBank[0];
-                this.controlModeBind();
-        }
+        let newBank = (this.currentBank.value + 1) % 4;
+        this.currentBank.value = newBank;
+        this.trackArray.value = this.trackBank[newBank];
+        this.trackMapping.value = setTrackMapping(this.trackArray);
+        this.controlModeBind();
     }
 
     // ******************************************************

@@ -2,6 +2,7 @@
 import ModuleTitle from "@/components/ui/ModuleTitle.vue";
 import KeyDisplayVue from "@/components/ui/KeyDisplay.vue";
 import LedRed from "@/components/ui/LedRed.vue";
+import { setUpMultiPitch } from "@/composables/FunctionHandler/SetupFunctions";
 import { getKeyMapping } from "@/composables/Controler/KeyMapping";
 import { inject, ref, Ref } from "vue";
 
@@ -11,9 +12,7 @@ let keyMapping: any = getKeyMapping("setup");
 const functions = [
     {
         name: "Multi Pitch",
-        function: () => {
-            console.log("helloloo");
-        },
+        function: () => setUpMultiPitch(dk),
     },
     { name: "Multi Level", function: () => {} },
     { name: "Exit Multi Mode", function: () => {} },
@@ -32,6 +31,7 @@ const handlePress = (key: string) => {
     isOn.value = !isOn.value;
     if (isOn.value) {
         dk.setFunctionDescription(functions);
+        dk.screen.write(0, "Set-up Function ?");
     } else {
         dk.resetFunctionDescription();
     }

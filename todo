@@ -1,0 +1,7 @@
+-   Delete the track array and replace it by the trackMapping
+
+-   MultiMode:
+    -   Add multiLevel
+    -   Turn on multiMode light
+    -   refacto multiPitchHandler function
+    -   refacto slider modifier
