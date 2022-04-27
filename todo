@@ -4,6 +4,7 @@
 
     -   fix slider modifier with track mapping
     -   handle bank switching in MultiMode
+	-	handle TuneDecayMix in MultiMode
     -   refacto multiPitchHandler function
 
 -   Sequencing

@@ -47,7 +47,7 @@ const handleUnpress = (key: string) => {
 
 <template>
     <div id="setup">
-        <ModuleTitle class="title" title="Setup"></ModuleTitle>
+        <ModuleTitle class="title" title="Set up"></ModuleTitle>
         <span class="button-container">
             <KeyDisplayVue
                 class="button"

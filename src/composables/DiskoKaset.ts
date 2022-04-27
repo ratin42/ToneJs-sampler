@@ -98,7 +98,7 @@ class DiskoKaset {
     }
     resetFunctionDescription() {
         this.functionDescription.value = initFunctions;
-        this.screen.resetLine();
+        this.screen.setHome();
     }
 
     setBank() {
