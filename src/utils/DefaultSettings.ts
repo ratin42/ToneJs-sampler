@@ -123,4 +123,31 @@ let initKeyMapping = {
     ],
 };
 
-export { initKeyMapping };
+let initMultimode = [
+    {
+        status: false,
+        lastTrack: -1,
+        level: [0, 0, 0, 0, 0, 0, 0, 0],
+        pitch: [-7, -6, -5, -4, -3, -2, -1, 0],
+    },
+    {
+        status: false,
+        lastTrack: -1,
+        level: [0, 0, 0, 0, 0, 0, 0, 0],
+        pitch: [-7, -6, -5, -4, -3, -2, -1, 0],
+    },
+    {
+        status: false,
+        lastTrack: -1,
+        level: [0, 0, 0, 0, 0, 0, 0, 0],
+        pitch: [-7, -6, -5, -4, -3, -2, -1, 0],
+    },
+    {
+        status: false,
+        lastTrack: -1,
+        level: [0, 0, 0, 0, 0, 0, 0, 0],
+        pitch: [-7, -6, -5, -4, -3, -2, -1, 0],
+    },
+];
+
+export { initKeyMapping, initMultimode };

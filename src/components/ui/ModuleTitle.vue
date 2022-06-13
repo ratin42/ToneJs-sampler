@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
     <div id="module-title">
-        <p>{{ props.title }}</p>
+        <p class="font-mono">{{ props.title }}</p>
         <hr class="line" />
     </div>
 </template>

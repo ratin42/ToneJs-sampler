@@ -44,6 +44,7 @@ const handleUnpress = (key: string) => {
 // Call the global object function to update the track's slider value
 const updateSliderValue = (value: number) => {
     dk.handleSlider(props.trackId, value);
+    console.log("trackMapping", dk.trackMapping);
 };
 const sliderIncrement = (key: string) => {
     dk.trackArray.value[props.trackId].sliderValue += 1;

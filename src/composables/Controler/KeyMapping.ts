@@ -1,4 +1,4 @@
-import { initKeyMapping } from "../../utils/keyMapping";
+import { initKeyMapping } from "../../utils/DefaultSettings";
 
 const loadKeyMapping = () => {
     if (!window.localStorage.getItem("keyMapping")) {

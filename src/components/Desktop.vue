@@ -4,6 +4,7 @@ import { provide } from "vue";
 
 import Sampler from "@/components/Sampler/Sampler.vue";
 import { loadKeyMapping } from "@/composables/Controler/KeyMapping";
+import { loadMultiModeSetting } from "@/composables/FunctionHandler/SetupFunctions";
 import { dk } from "@/composables/DiskoKaset";
 
 // ORIGINAL SCREEN IS 16 * 2
@@ -14,8 +15,12 @@ import { dk } from "@/composables/DiskoKaset";
 provide("dk", dk);
 let wait = true;
 
-if (!window.localStorage.getItem("keyMapping")) {
+if (
+    !window.localStorage.getItem("keyMapping") ||
+    !window.localStorage.getItem("multiModeSetting")
+) {
     loadKeyMapping();
+    loadMultiModeSetting();
     wait = false;
 } else {
     wait = false;

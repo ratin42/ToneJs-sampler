@@ -1,5 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import DesktopVue from "@/components/Desktop.vue";
+import "./index.css";
 </script>
 
 <template>
@@ -32,7 +33,7 @@ import DesktopVue from "@/components/Desktop.vue";
 body {
     width: 100vw;
     height: 100vh;
-    // overflow: hidden;
+    overflow: hidden;
     margin: 0rem;
     padding: 0rem;
     color: var(--psd-darkest-grey);

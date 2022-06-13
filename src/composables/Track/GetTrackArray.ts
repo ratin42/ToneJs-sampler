@@ -19,7 +19,7 @@ class Track {
     currentPitch: number = 16;
     currentVolume: number = 0;
     sliderValue: any = ref(0);
-    record: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    record: any = new Array(16).fill(false);
     currentDecay: number = 0.2;
 
     constructor(id: number, sampleUrl: string, color: string) {
@@ -52,7 +52,6 @@ class Track {
             this.player.playbackRate =
                 parseFloat(noteTranslation[pitch].frequency) / 261.637;
             this.player.volume.value = volume;
-            console.timeEnd("playSound");
             this.player.start(0, this.offset);
         }
     };
@@ -71,7 +70,6 @@ class Track {
     };
 
     changePitch = (value: number) => {
-        console.time("changePitch");
         if (value < 0 || value > 32) {
             // Block the slider to the pitch limit
 
@@ -85,7 +83,6 @@ class Track {
                 this.player.playbackRate = pitch;
             }
         }
-        console.timeEnd("changePitch");
     };
 }
 

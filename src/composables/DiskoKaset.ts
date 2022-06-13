@@ -68,23 +68,28 @@ class DiskoKaset {
         this.trackMapping = setTrackMapping(this.trackArray);
     }
     playSound(trackId: number) {
-        console.time("playSound");
         if (this.trackPlayCallBack) {
             this.trackPlayCallBack(trackId);
         }
 
-        // let track = this.trackMapping[trackId];
-        // track.play(track.pitch);
-
+        // Call the play method in trackMapping with the pitch and the volume
         this.trackMapping[trackId].play(
             this.trackMapping[trackId].pitch,
             this.trackMapping[trackId].volume
         );
-        //     // let index = (this.transposeIndex.value % 16) - 1;
-        //     // if (index < 0) {
-        //     //     index = 15;
-        //     // }
-        //     // track.record[index] = 1;
+
+        let index = (this.transposeIndex.value - 1) % 16;
+        index = Math.floor(index / 2) * 2;
+        if (index < 0) {
+            index = 15;
+        }
+        this.trackMapping[trackId].trackObj.record[index] = 1;
+        console.log(
+            "track " +
+                trackId +
+                " record = " +
+                this.trackMapping[trackId].trackObj.record
+        );
     }
     stopSound(trackId: number) {
         this.trackMapping[trackId].stop();
@@ -180,6 +185,7 @@ class DiskoKaset {
         // it is represented by a struct in composables/SliderMode/ControlModeStruct
 
         (sliderControlMode as any)[this.controlMode.value].function(
+            this,
             this.trackArray,
             this.trackIdToBank(trackId),
             value
@@ -190,3 +196,4 @@ class DiskoKaset {
 const dk = new DiskoKaset();
 
 export { dk };
+export type { DiskoKaset };

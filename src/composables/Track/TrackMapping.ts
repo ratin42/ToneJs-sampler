@@ -9,6 +9,7 @@ interface TrackMapping {
     trackId: number;
     sliderUp: Function;
     sliderDown: Function;
+    trackObj: any;
 }
 
 function setTrackMapping(trackArray: Ref<trackArray>) {
@@ -23,6 +24,7 @@ function setTrackMapping(trackArray: Ref<trackArray>) {
             trackId: index,
             sliderUp: () => {},
             sliderDown: () => {},
+            trackObj: track,
         };
         trackMapping.push(tm);
     });

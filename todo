@@ -2,10 +2,8 @@
 
 -   MultiMode:
 
-    -   fix slider modifier with track mapping
     -   handle bank switching in MultiMode
-	-	handle TuneDecayMix in MultiMode
-    -   refacto multiPitchHandler function
+    -   handle TuneDecayMix in MultiMode
 
 -   Sequencing
     -   add Mute Solo in Setup Menu

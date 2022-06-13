@@ -29,6 +29,7 @@ Tone.Transport.scheduleRepeat((time) => {
         }
         currentIndex.value++;
     }
+    console.log("transpose index", dk.transposeIndex.value);
     dk.trackBank.forEach((bank: trackArray) => {
         bank.forEach((track: Track) => {
             track.checkRecord(dk.transposeIndex.value % 16, time);
@@ -44,8 +45,9 @@ Tone.Transport.scheduleRepeat((time) => {
 
 <template>
     <div id="performance">
-        <!-- <p>{{ "Current Index " + (currentIndex % 4) }}</p>
-        <button @Click="changeMetro">stop metro</button> -->
+        <p>{{ "Current Index " + (currentIndex % 4) }}</p>
+        <button @Click="changeMetro">stop metro</button>
+
         <ModuleTitle
             class="performance-title"
             title="Performance"
